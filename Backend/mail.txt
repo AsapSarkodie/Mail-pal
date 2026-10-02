@@ -1,0 +1,45 @@
+MAIL PAL 
+
+//FEATURES. 
+SEND A MESSAGE TO EACH OTHER.
+EDIT MASSAGES
+DELETE MESSAGES.
+SEND FILES;
+STAR OR FAVORITE A MESSAGE
+SAVE PROFILE IMAGE.
+SELECT FILES TO DELETE
+
+
+//ROUTES
+MESSAGES ROUTES
+AUTH ROUTES
+
+//ROUTES BREAKDOWN
+GET ALL MESSAGES (INBOX, RECEIVED)
+GET STARRED MESSAGES.
+GET SENT MESSAGES.
+
+EDIT MESSAGE
+DELETE MESSAGE
+
+/2/AUTH ROUTES BREAKDOWN
+SIGN UP ROUTE
+SIGN IN ROUTE.
+
+//SECURITY
+ENCYRPT PASSWORD IN DATABASE
+USERS MUST BE AUTHENTICATED (JWT)
+USER MUST NOT ACCESS OTHER USERS MESSAGES
+
+1. //DATABASE
+USERS TABLE;
+MESSAGES TABLE
+LEARN HOW TO JOIN TABLES WITH ID
+
+
+//TIPS from this Project
+Controller: handles the HTTP side. It reads the request (req.body, req.params), 
+calls a service, and sends the response (res.json, status codes).
+
+Service: handles the business logic and database work. 
+It knows nothing about req or res. It just takes plain data, does the work, and returns a result.
