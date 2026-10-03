@@ -12,7 +12,9 @@ const app = express();
 app.use(express.json())
 const __dirname = import.meta.dirname;
 
+//serve folders to be accessed later
 app.use(express.static('public'))
+app.use(express.static('profiles'));
 
 //routes
 app.get('/', (req, res)=>{
@@ -22,5 +24,6 @@ app.get('/', (req, res)=>{
 app.use('/auth', signUpRoute)
 
 app.listen(PORT, ()=>{
-    console.log(`Mail server is running on port:${PORT}`);       
+    console.log(`Mail server is running on port:${PORT}`);   
+        
 });

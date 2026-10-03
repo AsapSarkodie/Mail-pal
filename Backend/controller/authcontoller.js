@@ -17,30 +17,17 @@ const registerUser = async (req, res) => {
            return res.json({message: 'MISSING_FEILDS'});        
     };
 
-    const hashedPassword = bcrypt.hashSync(password, 9);
-    
-    
-     //check if encrytion worked
-     !hashedPassword ? console.log(`failed to encrypt password`) : console.log(`password encryption successful`);
+    const hashedPassword = await bcrypt.hash(password, 9);
 
-    
+    const inputUser = await saveUser(username, email, hashedPassword, profilePicture?.path ?? null);
 
-      const inputUser =  saveUser(username, email, hashedPassword, profilePicture.path);
-
-       if (inputUser) {
-        return res.status(201).json({message: 'USER REGISTERED SUCCESSFULLY', saveUser})
-       }  else {
-        return res.json({
-            message: `REGISTRATION_FAILED`
-        })
-       }
+     res.status(201).json({message: 'USER CREATED PINTAW', output: inputUser})
         
-     
 
         
     } catch (error) {
         console.log(`error: ${error}`);
-         
+        return res.status(500).json({ message: 'SERVER_ERROR' });
     }  
 };
 
