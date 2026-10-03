@@ -22,6 +22,7 @@ const registerUser = async (req, res) => {
     const inputUser = await saveUser(username, email, hashedPassword, profilePicture?.path ?? null);
 
      res.status(201).json({message: 'USER CREATED PINTAW', output: inputUser})
+     console.log(`user registered`);
         
 
         
