@@ -3,10 +3,9 @@ import { registerUser } from "../controller/authcontoller.js";
 import { Router } from "express";
 
 
+const authentication = Router();
 
+authentication.post('/signup',upload.single("profile_picture"), registerUser);
+//authentication.post('/sign-in', middleware
 
-const signUpRoute = Router();
-
-signUpRoute.post('/signup',upload.single("profile_picture"), registerUser);
-
-export {signUpRoute};
+export {authentication};

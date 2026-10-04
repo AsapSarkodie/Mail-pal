@@ -1,5 +1,11 @@
 MAIL PAL 
 
+//Todo,
+1. install cookie parser
+
+
+
+
 //FEATURES. 
 SEND A MESSAGE TO EACH OTHER.
 EDIT MASSAGES

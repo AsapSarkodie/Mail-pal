@@ -19,4 +19,18 @@ async function saveUser(username, email, hashedPassword, profile) {
     }
 }
 
-export {saveUser}
+//findUser
+async function findUser(email) {
+    
+    try {
+        const lookupUser = await pool.query(`SELECT * FROM users WHERE email = $1`, [email])
+
+        return lookupUser;
+    } catch (error) {
+        console.log(`error: ${error}`);
+        throw error
+    }
+
+};
+
+export {saveUser, findUser}
