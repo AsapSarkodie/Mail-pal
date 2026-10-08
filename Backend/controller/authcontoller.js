@@ -2,9 +2,12 @@
 import { saveUser, findUser } from "../services/authService.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
+import path from "path";
 
 
 
+
+const __dirname = import.meta.dirname;
 //logic for registering a user
 const registerUser = async (req, res) => {
     //destructure incoming data
@@ -22,10 +25,16 @@ const registerUser = async (req, res) => {
 
     const inputUser = await saveUser(username, email, hashedPassword, profilePicture?.path ?? null);
 
-     res.status(201).json({message: 'USER CREATED PINTAW', output: inputUser})
-     console.log(`user registered`);
-        
+    if (inputUser) {
+        console.log(`user registered`);
 
+   return res.status(201).json({message: 'USER CREATED PINTAW'})
+    }
+   
+    
+     
+        
+     
         
     } catch (error) {
         console.log(`error: ${error}`);
@@ -35,6 +44,8 @@ const registerUser = async (req, res) => {
 
 //Sign-in 
 const signInUser = async (req, res) => {
+    console.log(`form is working and is accessing the signin route`);
+    
     //destructure request body
     const {email, password} = req.body;
     try {
@@ -62,9 +73,19 @@ const signInUser = async (req, res) => {
         console.log(`invalid password`);
       return res.status(400).json({message: 'INVALID_CREDENTIALS'})
     }
+    
+      //sign a token
+    const token = jwt.sign({id: user.id, username: user.username}, process.env.JWT_SECRET, {expiresIn: "1d"});
 
-    //sign a token
-    const token = jwt.sign({id: user.id, username: user.username}, process.env.JWT_SECRET, {expiresIn: "1d"})
+     res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60 * 1000,
+    });
+   
+    return res.status(302).redirect('/')
+  
         
     } catch (error) {
         console.log(`error: ${error}`);
@@ -72,4 +93,4 @@ const signInUser = async (req, res) => {
     }
 }
 
-export {registerUser}
+export {registerUser, signInUser}

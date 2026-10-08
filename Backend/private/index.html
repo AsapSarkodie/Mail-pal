@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Mail page</h1>
+     <p></p>
+
+     <script>
+         const getInfo = async () => {
+            try {
+                const data = await fetch('http:localhost:8080/')
+                const info = await data.json()
+                console.log(info);
+                
+            } catch (error) {
+                console.log(error); 
+            }
+        };
+
+        window.addEventListener("DOMContentLoaded", getInfo)
+
+
+
+
+     </script>
+</body>
+</html>

@@ -7,5 +7,49 @@
 </head>
 <body>
     <h1>SIGN IN </h1>
+      <form action="">
+       <input style="color: black;" placeholder="Email" type="email" name="email" id="">
+       <input style="color: black;" placeholder="password" type="password" name="password" id="">
+        <button style="color: black;">submit</button>
+      </form>
+    
+
+
+    <script>
+        const form = document.querySelector("form");
+        const email = document.querySelector("#email");
+        const password = document.querySelector("#email");
+
+        const getInfo = async () => {
+            try {
+                let eva = email.value;
+                let pss = password.value;
+
+                const data = await fetch('http://localhost:8080/auth/signin', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: eva, 
+                        password: pss
+                    })
+                });
+
+                let information = await data.json()
+                console.log(information);
+                
+            } catch (error) {
+                console.log(error); 
+            }
+        };
+
+        form.addEventListener("submit", (e)=>{
+              e.preventDefault()
+              console.log('form click');
+              getInfo
+        })
+          
+    </script>
 </body>
 </html>
