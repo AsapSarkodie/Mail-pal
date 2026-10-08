@@ -11,6 +11,7 @@ import { messagesRoute } from './routes/messagesRoute.js';
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+//global middleware
 app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
@@ -28,6 +29,5 @@ app.use('/auth', authentication)
 app.use('/', messagesRoute)
 
 app.listen(PORT, ()=>{
-    console.log(`Mail server is running on port:${PORT}`);
-    console.log();          
+    console.log(`Mail server is running on port:${PORT}`);        
 });

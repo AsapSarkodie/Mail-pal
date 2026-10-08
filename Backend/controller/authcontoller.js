@@ -2,39 +2,31 @@
 import { saveUser, findUser } from "../services/authService.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
-import path from "path";
 
-
-
-
-const __dirname = import.meta.dirname;
 //logic for registering a user
 const registerUser = async (req, res) => {
     //destructure incoming data
     const {username, email, password} = req.body;
     const profilePicture = req.file;
     
-    //check if they all exist
+    //check if all neccesary inputs are available
     try {
         if (!username || !email || !password) {
            console.log(`missing fields`);
            return res.json({message: 'MISSING_FEILDS'});        
     };
 
+    //encrypt the password.
     const hashedPassword = await bcrypt.hash(password, 9);
 
+    //save user into database
     const inputUser = await saveUser(username, email, hashedPassword, profilePicture?.path ?? null);
-
+    
+    //check if storage was successful
     if (inputUser) {
         console.log(`user registered`);
-
-   return res.status(201).json({message: 'USER CREATED PINTAW'})
+        return res.status(201).json({message: 'USER_CREATED_SUCCESSFULLY'})
     }
-   
-    
-     
-        
-     
         
     } catch (error) {
         console.log(`error: ${error}`);
@@ -54,7 +46,7 @@ const signInUser = async (req, res) => {
           return res.json({message: `MISSING_FEILDS`})   
         }
 
-    //look up user
+    //look up user from the database
     const lookUpUser = await findUser(email)
 
     //check if user exists
@@ -68,13 +60,14 @@ const signInUser = async (req, res) => {
 
     //check for password mismatch
     const isMatch = await bcrypt.compare(password, user.password_hash);
-
+    
+    //check for a mismatch
     if (!isMatch) {
         console.log(`invalid password`);
       return res.status(400).json({message: 'INVALID_CREDENTIALS'})
     }
     
-      //sign a token
+    //sign a token
     const token = jwt.sign({id: user.id, username: user.username}, process.env.JWT_SECRET, {expiresIn: "1d"});
 
      res.cookie('token', token, {

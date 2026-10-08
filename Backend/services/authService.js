@@ -10,7 +10,7 @@ async function saveUser(username, email, hashedPassword, profile) {
         VALUES ($1, $2, $3, $4) RETURNING id, username, email, profile_picture
         `, [username, email, hashedPassword, profile])
 
-        
+        //RETURN THE ROW
        return register.rows[0]
         
     } catch (error) {

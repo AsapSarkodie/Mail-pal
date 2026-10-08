@@ -8,10 +8,9 @@ const __dirname = import.meta.dirname;
 
 //get text the login for now
 messagesRoute.get('/', verifyCookie, async (req, res)=>{
-    console.log('verify??');
     
    return  res.sendFile(path.join(__dirname, "..", "private", "index.html"))
-    
+
 });
 
 

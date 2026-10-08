@@ -23,7 +23,9 @@ const fileFilter = function(req, file, cb) {
     if (allowed.includes(file.mimetype)) {
         cb(null, true)
     } else{
-      cb(new Error("Only png, jpeg or webp images are allowed"));
+        console.log(`file uploaded is not a png, jpeg or webp `);
+        
+       cb(new Error("Only png, jpeg or webp images are allowed"));
     }
 };
 
