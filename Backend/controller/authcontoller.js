@@ -2,6 +2,7 @@
 import { saveUser, findUser } from "../services/authService.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
+import path from 'path';
 
 //logic for registering a user
 const registerUser = async (req, res) => {
@@ -77,7 +78,7 @@ const signInUser = async (req, res) => {
         maxAge: 24 * 60 * 60 * 1000,
     });
    
-    return res.status(302).redirect('/')
+    return res.status(302).redirect('/mail/mainpage'); 
   
         
     } catch (error) {
@@ -86,4 +87,10 @@ const signInUser = async (req, res) => {
     }
 }
 
-export {registerUser, signInUser}
+//serve login page
+
+function getLoginPage(req, res) {
+    res.sendFile(path.join(import.meta.dirname, "..", "public", "signIn.html" ))
+}
+
+export {registerUser, signInUser, getLoginPage}

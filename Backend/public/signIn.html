@@ -8,17 +8,56 @@
 <body>
     <h1>SIGN IN </h1>
       <form action="">
-       <input style="color: black;" placeholder="Email" type="email" name="email" id="">
-       <input style="color: black;" placeholder="password" type="password" name="password" id="">
+       <input style="color: black;" placeholder="Email" type="email" name="email" id="email">
+       <input style="color: black;" placeholder="password" type="password" name="password" id="password">
         <button style="color: black;">submit</button>
       </form>
     
 
 
     <script>
-        const form = document.querySelector("form");
-        const email = document.querySelector("#email");
-        const password = document.querySelector("#email");
+      
+       const form = document.querySelector("form");
+        
+        form.addEventListener("submit", async (e)=>{
+           e.preventDefault();
+             
+              const email = document.querySelector("#email");
+              const password = document.querySelector("#password");
+           
+              const signInData = {
+                email: email.value,
+                password: password.value
+              }
+
+
+           try {
+            const signin = await fetch(`http://localhost:8080/auth/signin`, {
+                method: "POST",
+                headers:{
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(signInData)
+            })
+
+            
+
+             if (signin.redirected) {
+              window.location.href = signin.url;
+              return;
+             } else {
+              console.log(todo.message);
+             }
+            
+            let data = await signin.json();
+            console.log(data.message);
+            
+           } catch (error) {
+             console.log(`error: ${error}`);
+    
+           }
+
+        });
 
        
     </script>

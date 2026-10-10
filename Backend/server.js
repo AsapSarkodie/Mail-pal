@@ -26,7 +26,8 @@ app.use(express.static('profiles'));
 //routes
 
 app.use('/auth', authentication)
-app.use('/', messagesRoute)
+app.use('/mail', messagesRoute)
+
 
 app.listen(PORT, ()=>{
     console.log(`Mail server is running on port:${PORT}`);        
