@@ -3,9 +3,9 @@ POST http://localhost:8080/mail/sendMessage
 Content-Type: application/json
 
 {
-    "sentBy": 2,
-    "sentTo": 1,
-    "subject": "second send email test",
-    "body": "Hello, I am sarkodie and i am testing my send message route. so help me God, this time i will make it a little longer "
+    "sentBy": 1,
+    "sentTo": 3,
+    "subject": "God will take care of me",
+    "body": "Do not be dismayed, God will take care of you"
 }
 

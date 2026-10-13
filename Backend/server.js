@@ -11,6 +11,7 @@ import { messagesRoute } from './routes/messagesRoute.js';
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
 //global middleware
 app.use(express.json())
 app.use(cors())
@@ -18,13 +19,10 @@ app.use(cookieParser())
 
 
 
-
 //serve folders to be accessed later
-
 app.use(express.static('profiles'));
 
 //routes
-
 app.use('/auth', authentication)
 app.use('/mail', messagesRoute)
 
