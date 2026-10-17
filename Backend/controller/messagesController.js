@@ -1,4 +1,4 @@
-import { saveMessage } from "../services/messagesService.js";
+import { saveMessage, readInbox, readSent } from "../services/messagesService.js";
 
 const sendMessage = async (req, res) => {
     
@@ -36,6 +36,39 @@ const sendMessage = async (req, res) => {
 };
 
 
+//read message (inbox)
+const readInboxMessage = async (req, res) => {
+    try {
+        //get user
+        const user = req.user;
+        
+        //read inbox
+        let inbox = await readInbox(user.id);
+        //return messages
+       return res.json({message: inbox})
+        
+    } catch (error) {
+        console.log(error);
+        throw error
+    }
+};
 
+//read sent messages
+const readSentMessages = async (req, res) => {
+    try {
+        const user = req.user;
+       
+        //read sent 
+        const sent = await readSent(user.id);
+        
+        //return messages
+      return  res.json({message: sent});
 
-export {sendMessage};
+        
+    } catch (error) {
+         console.log(error);
+        throw error
+    }
+};
+
+export {sendMessage, readInboxMessage, readSentMessages};

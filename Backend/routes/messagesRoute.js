@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { verifyCookie } from "../middleware/jwt.js ";
-import { sendMessage } from "../controller/messagesController.js";
+import { verifyCookie, accessIdFromCookie } from "../middleware/jwt.js ";
+import { sendMessage, readInboxMessage, readSentMessages } from "../controller/messagesController.js";
 import path from "path"
 
 
@@ -13,7 +13,14 @@ messagesRoute.get('/mainpage', verifyCookie, async (req, res)=>{
 
 });
 
+//post or send a message
 messagesRoute.post('/sendMessage', sendMessage);
 
+
+//read inbox message based on id.
+messagesRoute.get("/readMessages", accessIdFromCookie, readInboxMessage );
+
+//read sent messages 
+messagesRoute.get("/readSent", accessIdFromCookie, readSentMessages);
 
 export {messagesRoute}

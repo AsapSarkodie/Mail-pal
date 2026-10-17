@@ -23,8 +23,8 @@ app.use(cookieParser())
 app.use(express.static('profiles'));
 
 //routes
-app.use('/auth', authentication)
-app.use('/mail', messagesRoute)
+app.use('/auth', authentication);
+app.use('/mail', messagesRoute);
 
 
 app.listen(PORT, ()=>{

@@ -3,9 +3,9 @@ POST http://localhost:8080/mail/sendMessage
 Content-Type: application/json
 
 {
-    "sentBy": 1,
-    "sentTo": 3,
-    "subject": "God will take care of me",
-    "body": "Do not be dismayed, God will take care of you"
+    "sentBy": 3,
+    "sentTo": 1,
+    "subject": "Trust",
+    "body": "Keep praying, and develop a habit of prayer because it will really help."
 }
 

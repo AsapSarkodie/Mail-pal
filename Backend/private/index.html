@@ -7,12 +7,64 @@
 </head>
 <body>
     <h1 style="text-align: center;">Mail page</h1>
-     <p></p>
+     <div class="mail">
+       
+     </div>
 
+
+      
+     <div class="sentMessages">
+        <button id="sent-btn">sent</button>
+
+     </div>
      <script>
-        
+        let mailBox =  document.querySelector(".mail");
+        let sentBox = document.querySelector(".sentMessages");
+        let btn = document.querySelector("#sent-btn");
 
-     
+        window.addEventListener("DOMContentLoaded", async () => {
+            try {
+              const readInbox = await fetch(`http://localhost:8080/mail/readMessages`);
+              let data = await readInbox.json()
+              console.log(data);
+              
+               data.message.forEach(message => {
+                let subject = document.createElement("h1");
+                let body = document.createElement("p");
+
+                subject.textContent = message.subject;
+                body.textContent = message.body;
+
+                mailBox.append(subject, body)
+
+             });
+              
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        btn.addEventListener("click", async () => {
+            try {
+
+              const readSent = await fetch(`http://localhost:8080/mail/readSent`);
+              let data = await readSent.json()
+              console.log(data);
+               data.message.forEach(message => {
+                let subject = document.createElement("h1");
+                let body = document.createElement("p");
+
+                subject.textContent = message.subject;
+                body.textContent = message.body;
+
+                sentBox.append(subject, body)
+               })
+                
+            } catch (error) {
+                console.log(error);
+                
+            }
+        });
 
 
      </script>

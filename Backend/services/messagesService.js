@@ -17,4 +17,42 @@ const saveMessage = async (sentBy, sentTo, subject, body) => {
     }
 };
 
-export {saveMessage}
+const readInbox = async (sentTo) =>{
+    try {
+        const inbox = await pool.query(`
+            SELECT subject, body, starred, is_read FROM messages 
+            WHERE sent_to = $1`, [sentTo]);
+
+    //check if message is empty
+    if (inbox.rows.length === 0) {
+        console.log('no message found');
+        
+        return 'no message found'
+    } else {
+        return inbox.rows
+    }
+
+    } catch (error) {
+        console.log(error);
+        throw error;
+    };
+};
+
+const readSent = async (sentBy) => {
+    try {
+        const sent = await pool.query(`
+            SELECT subject, body, starred, is_read FROM messages 
+            WHERE sent_by = $1`, [sentBy]);
+
+        if (sent.rows.length === 0) {
+            return 'No messages found'
+        } else {
+            return sent.rows
+        }
+    } catch (error) {
+         console.log(error);
+        throw error
+    }
+}
+
+export {saveMessage, readInbox, readSent};

@@ -12,7 +12,6 @@ function verifyCookie(req, res, next) {
     
     req.user = jwt.verify(token, process.env.JWT_SECRET);
 
-    console.log('cookies:', req.cookies);   // temporary debug line
     return next()
     } catch (error) {
         console.log(`error: ${error}`);
@@ -21,4 +20,27 @@ function verifyCookie(req, res, next) {
     }
 }
 
-export {verifyCookie}
+
+//verify cookie for the id
+function accessIdFromCookie(req, res, next) {
+  
+  const token = req.cookies?.token;
+
+  if (!token) {
+    return res.status(404).json({message: `NO COOKIE DETECTED`})
+  }
+  try {
+     const user = jwt.verify(token, process.env.JWT_SECRET);
+
+  //attach it to the request object
+  req.user = user;
+  
+  next()
+  } catch (error) {
+    console.log(error);
+    throw error
+  }
+ 
+};
+
+export {verifyCookie, accessIdFromCookie}

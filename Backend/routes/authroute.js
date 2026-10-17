@@ -1,4 +1,4 @@
-import upload from "../middleware/profile.js";
+ import upload from "../middleware/profile.js";
 import { registerUser, signInUser, getLoginPage } from "../controller/authcontoller.js";
 import { Router } from "express";
 
