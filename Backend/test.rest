@@ -6,6 +6,6 @@ Content-Type: application/json
     "sentBy": 3,
     "sentTo": 1,
     "subject": "Trust",
-    "body": "Keep praying, and develop a habit of prayer because it will really help."
+    "body": "Today is Monday. This week is blessed"
 }
 

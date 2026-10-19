@@ -57,6 +57,10 @@ const readInboxMessage = async (req, res) => {
 const readSentMessages = async (req, res) => {
     try {
         const user = req.user;
+        if (!user) {
+            console.log('not looged in');
+        return res.status(401).json({message: `NOT_AUTHORIZED`})
+        }
        
         //read sent 
         const sent = await readSent(user.id);
