@@ -14,7 +14,7 @@ messagesRoute.get('/mainpage', verifyCookie, async (req, res)=>{
 });
 
 //post or send a message
-messagesRoute.post('/sendMessage', sendMessage);
+messagesRoute.post('/sendMessage',accessIdFromCookie, sendMessage);
 
 
 //read inbox message based on id.

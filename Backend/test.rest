@@ -3,8 +3,7 @@ POST http://localhost:8080/mail/sendMessage
 Content-Type: application/json
 
 {
-    "sentBy": 3,
-    "sentTo": 1,
+    "sentTo": "ama@gmail.com",
     "subject": "Trust",
     "body": "Today is Monday. This week is blessed"
 }

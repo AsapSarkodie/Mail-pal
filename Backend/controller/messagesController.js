@@ -3,15 +3,30 @@ import { saveMessage, readInbox, readSent } from "../services/messagesService.js
 const sendMessage = async (req, res) => {
     
     //destructure request body
-    const {sentBy, sentTo, subject, body} = req.body;
-    
+    const {sentTo, subject, body} = req.body;
+    const sentBy = req.user.email;
     try {
+     
+    //check if user has a token
+    if (!sentBy) {
+     console.log('no token from request');
+     return res.json({message: "NOT_AUTHORIZED"})
+    }
 
-     //check if the neccessary data are sent
-    if (!sentBy || !sentTo || !subject || !body) {
-        console.log(`missing fields`);
+    if (!sentTo) {
+        console.log('no receiver');
+        return res.status(404).json({message: `RECEIVER_NOT_FOUND`});
+    }
+     
+    if ( !subject) {
+        console.log(`missing subject`);
         
-        return res.status(404).json({message: `MISSING_FEILD`});}
+        return res.status(404).json({message: `MISSING_SUBJECT`});
+    }
+    if (!body) {
+        console.log('no body sent');
+        return res.status(404).json({message: `MISSING_BODY`});
+    }
 
     //check if user is sending message to himself bg
     if (sentBy === sentTo) {

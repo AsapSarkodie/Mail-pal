@@ -7,10 +7,48 @@
 </head>
 <body>
      <h1>Main Page</h1>
+     <form action="">
+        <input id="send-to" placeholder="send to?" type="text">
+        <input id="subject" placeholder="subject" type="text">
+        <textarea placeholder="body" name="body" id="body"></textarea>
+        <button>send</button>
+     </form>
 
      </div>
      <script>
 
+        let form = document.querySelector("form");
+
+        form.addEventListener("submit", async (e) => {
+             let sendTo = document.querySelector("#send-to");
+             let subject = document.querySelector("#subject");
+             let body = document.querySelector("#body");
+
+            e.preventDefault()
+            try {
+                const details = {
+                   sentTo: sendTo.value,
+                   subject: subject.value,
+                   body: body.value
+                }
+             const sendMessage = await fetch("http://localhost:8080/mail/sendMessage", {
+                method: "POST",
+                headers:{
+                 "Content-type": "application/json"
+                },
+                body: JSON.stringify(details)
+             });
+
+             const data = await sendMessage.json()
+             console.log(sendTo.value);
+             
+             console.log(data);
+             
+            } catch (error) {
+                console.log(error);
+                
+            }
+        })
         /*
          let mailBox =  document.querySelector(".mail");
         let sentBox = document.querySelector(".sentMessages");

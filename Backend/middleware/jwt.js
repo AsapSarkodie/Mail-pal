@@ -11,6 +11,7 @@ function verifyCookie(req, res, next) {
     try {
     
     req.user = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(req.user);
 
     return next()
     } catch (error) {
