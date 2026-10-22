@@ -9,7 +9,7 @@ const saveMessage = async (sentBy, sentTo, subject, body) => {
     INSERT INTO messages (sent_by, sent_to, subject, body) 
     VALUES ($1, $2, $3, $4) RETURNING sent_by, sent_to, subject, body `, [sentBy, sentTo, subject, body]);
 
-    return save.rows[0];
+    return save.rows[0]
         
     } catch (error) {
         console.log(error);

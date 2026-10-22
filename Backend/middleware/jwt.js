@@ -34,6 +34,8 @@ function accessIdFromCookie(req, res, next) {
 
   //attach it to the request object
   req.user = user;
+  console.log(req.user);
+  
   
   next()
   } catch (error) {
