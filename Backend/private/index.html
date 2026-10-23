@@ -16,6 +16,9 @@
 
      </div>
      <script>
+        const backendURL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://localhost:8080"
+        : "https://gg7bbqpl-8080.uks1.devtunnels.ms";
 
         let form = document.querySelector("form");
 
@@ -31,7 +34,7 @@
                    subject: subject.value,
                    body: body.value
                 }
-             const sendMessage = await fetch("http://localhost:8080/mail/sendMessage", {
+             const sendMessage = await fetch(`${backendURL}/mail/sendMessage`, {
                 method: "POST",
                 headers:{
                  "Content-type": "application/json"  

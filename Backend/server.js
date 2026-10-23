@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 dotenv.config()
 import { authentication } from './routes/authroute.js';
 import { messagesRoute } from './routes/messagesRoute.js';
+import { getLoginPage } from './controller/authcontoller.js';
 
 
 
@@ -21,10 +22,11 @@ app.use(cookieParser())
 
 //serve folders to be accessed later
 app.use(express.static('profiles'));
-
+app.use(express.static('public'));
 //routes
 app.use('/auth', authentication);
 app.use('/mail', messagesRoute);
+app.get("/", getLoginPage);
 
 
 app.listen(PORT, ()=>{
