@@ -59,7 +59,7 @@ const readInboxMessage = async (req, res) => {
         const user = req.user;
         
         //read inbox
-        let inbox = await readInbox(user.id);
+        let inbox = await readInbox(user.email);
         //return messages
        return res.json({message: inbox})
         

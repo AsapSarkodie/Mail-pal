@@ -1,68 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mail Pal – Sign in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a2033;
+    --muted: #5d6e7e;
+    --line: #dbe4ea;
+    --green: #16b45f;
+    --green-deep: #0a9a50;
+    --green-soft: #e3f7ec;
+    --surface: #fff;
+    --page: #f3f6f9;
+    --radius: 14px;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    color: var(--ink);
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+  body {
+    overflow-y: hidden;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: clamp(0px, 4vw, 40px);
+    padding-block: max(clamp(0px, 4vw, 40px), env(safe-area-inset-top)) max(clamp(0px, 4vw, 40px), env(safe-area-inset-bottom));
+    background: var(--page);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  svg { display: block; }
+  .icon { width: 1.125rem; height: 1.125rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- Logo ---------- */
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    text-decoration: none;
+    color: var(--ink);
+
+    svg { width: 2.4rem; height: 2rem; }
+    span { color: var(--green); }
+  }
+
+  /* ---------- Stage ---------- */
+  .stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    width: min(100%, 1100px);
+    min-height: 800px;
+    overflow: hidden;
+    border-radius: 24px;
+    background:
+      radial-gradient(60% 50% at 30% 100%, #b9f0d1 0%, transparent 70%),
+      radial-gradient(50% 40% at 0% 100%, #d7f6e4 0%, transparent 70%),
+      linear-gradient(160deg, #fff 30%, #f1faf5);
+    box-shadow: 0 30px 60px -30px rgb(10 32 51 / .25), 0 0 0 1px rgb(10 32 51 / .05);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 2.6rem 0 0 3.6rem;
+
+    .logo { align-self: flex-start; }
+  }
+
+  .hero-copy { margin-block: auto; padding-block: 3rem 0; position: relative; z-index: 1; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .3rem .8rem;
+    border-radius: 99px;
+    background: var(--green-soft);
+    color: #0b6b3a;
+    font-size: .72rem;
+    font-weight: 600;
+
+    &::before { content: ""; width: .4rem; height: .4rem; border-radius: 50%; background: var(--green); }
+  }
+
+  h1 {
+    margin-block: 1.6rem 1.3rem;
+    font-size: clamp(2.6rem, 5vw, 3.6rem);
+    line-height: 1.02;
+    font-weight: 800;
+    letter-spacing: -.035em;
+    text-wrap: balance;
+
+    em { display: block; font-style: normal; color: var(--green); }
+  }
+
+  .lede { max-width: 28ch; color: var(--muted); line-height: 1.7; font-size: .95rem; }
+
+  .features {
+    display: grid;
+    gap: .85rem;
+    margin-top: 1.7rem;
+    padding: 0;
+    list-style: none;
+    font-size: .85rem;
+    font-weight: 500;
+
+    li { display: flex; align-items: center; gap: .8rem; }
+    .icon { color: var(--green-deep); }
+  }
+
+  .art {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 52%;
+    pointer-events: none;
+
+    .big { position: absolute; left: 9%; bottom: 6%; width: 52%; filter: drop-shadow(0 28px 24px rgb(10 120 70 / .3)); }
+    .small { position: absolute; width: 11%; opacity: .75; filter: blur(.4px); }
+    .s1 { left: 56%; top: 8%; rotate: 30deg; width: 9%; }
+    .s2 { left: 3%; bottom: 14%; rotate: -24deg; width: 13%; }
+    .s3 { left: 66%; top: 28%; rotate: 48deg; width: 12%; opacity: .55; }
+  }
+
+  /* ---------- Card ---------- */
+  .panel { display: grid; place-items: center; padding: 2rem 2.4rem 2rem 0; position: relative; z-index: 1; }
+
+  .card {
+    width: min(100%, 440px);
+    padding: 3rem 2.6rem 2.4rem;
+    border-radius: 18px;
+    background: rgb(255 255 255 / .88);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 50px -24px rgb(10 32 51 / .22), 0 0 0 1px rgb(10 32 51 / .04);
+
+    h2 { margin-top: 1.9rem; font-size: 1.9rem; font-weight: 800; letter-spacing: -.03em; }
+    .sub { margin-top: .6rem; color: var(--muted); font-size: .9rem; line-height: 1.7; max-width: 30ch; }
+  }
+
+  form { display: grid; gap: 1.1rem; margin-top: 1.7rem; }
+
+  .field { display: grid; gap: .5rem; }
+
+  label, .label { font-size: .82rem; font-weight: 600; }
+
+  .input {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    height: 3rem;
+    padding-inline: .9rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: #6b7c8c;
+    transition: border-color .15s, box-shadow .15s;
+
+    &:focus-within {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--green) 20%, transparent);
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      background: none;
+      font: inherit;
+      font-size: .88rem;
+      color: var(--ink);
+
+      &::placeholder { color: #8b9bab; }
+    }
+  }
+
+  .toggle {
+    display: grid;
+    place-items: center;
+    padding: .25rem;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover { color: var(--ink); }
+    &:focus-visible { outline: 2px solid var(--green); }
+  }
+
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: .8rem; }
+
+  .check { display: flex; align-items: center; gap: .6rem; font-weight: 500; font-size: .8rem; cursor: pointer; }
+  .check input {
+    appearance: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: 0;
+    border: 1px solid #b9c7d2;
+    border-radius: 5px;
+    background: #fff;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+
+    &:checked { background: var(--green-deep); border-color: var(--green-deep); }
+    &:checked::after { content: ""; width: .3rem; height: .55rem; border: solid #fff; border-width: 0 2px 2px 0; rotate: 45deg; translate: 0 -1px; }
+    &:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+  }
+
+  a { color: var(--green-deep); font-weight: 600; text-decoration: none; &:hover { text-decoration: underline; } }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    height: 3.1rem;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    font: inherit;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: translate .15s, box-shadow .15s, background-color .15s;
+
+    &:focus-visible { outline: 3px solid color-mix(in oklab, var(--green) 45%, transparent); outline-offset: 2px; }
+    &:active { translate: 0 1px; }
+  }
+
+  .btn-primary {
+    margin-top: .6rem;
+    border-color: transparent;
+    background: var(--green-deep);
+    color: #fff;
+    box-shadow: 0 10px 20px -10px rgb(10 154 80 / .7);
+
+    &:hover { background: #088a47; }
+  }
+
+  .btn-google { background: #fff; color: var(--ink); &:hover { background: #f7fafc; } .g { width: 1.15rem; height: 1.15rem; } }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--muted);
+    font-size: .78rem;
+
+    &::before, &::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  }
+
+  .signup { text-align: center; font-size: .78rem; color: var(--muted); }
+
+  /* mobile-only illustration */
+  .mobile-art { display: none; }
+
+  /* ---------- Tablet ---------- */
+  @media (width < 1000px) {
+    .hero { padding-left: 2.2rem; }
+    .panel { padding-right: 1.4rem; }
+    .card { padding-inline: 1.8rem; }
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (width < 760px) {
+    body { padding: 0; place-items: stretch; background: #fff; }
+
+    .stage {
+      display: block;
+      min-height: 100dvh;
+      border-radius: 0;
+      box-shadow: none;
+      background:
+        radial-gradient(70% 22% at 10% 0%, #d4f5e2 0%, transparent 100%),
+        radial-gradient(60% 20% at 100% 8%, #e4f8ee 0%, transparent 100%),
+        #fff;
+    }
+
+    .hero { display: none; }
+    .panel { display: block; padding: 2.5rem 1.5rem 0; }
+
+    .card {
+      width: 100%;
+      max-width: 460px;
+      margin-inline: auto;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      text-align: center;
+
+      h2 { margin-top: 1.6rem; }
+      .sub { margin-inline: auto; }
+      .logo { justify-content: center; }
+    }
+
+    form { text-align: left; }
+
+    .mobile-art {
+      display: block;
+      position: relative;
+      height: 190px;
+      margin-top: 1rem;
+      overflow: hidden;
+      pointer-events: none;
+
+      .big { position: absolute; left: 50%; translate: -50% 0; bottom: -28px; width: 190px; filter: drop-shadow(0 20px 18px rgb(10 120 70 / .25)); }
+      .small { position: absolute; left: 4%; bottom: 20px; width: 80px; rotate: -24deg; opacity: .7; }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
 </head>
 <body>
-    <h1>SIGN IN </h1>
-      <form action="">
-       <input style="color: black;" placeholder="Email" type="email" name="email" id="email">
-       <input style="color: black;" placeholder="password" type="password" name="password" id="password">
-        <button style="color: black;">submit</button>
+
+<!-- Shared SVG symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17b862"/><stop offset="1" stop-color="#087a47"/></linearGradient>
+    <linearGradient id="gFlap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7cf0ad"/><stop offset="1" stop-color="#1fbf68"/></linearGradient>
+  </defs>
+  <symbol id="envelope" viewBox="0 0 120 100">
+    <rect x="6" y="6" width="108" height="88" rx="14" fill="url(#gBody)"/>
+    <path d="M6 20a14 14 0 0 1 14-14h80a14 14 0 0 1 14 14v4L68 56a14 14 0 0 1-16 0L6 24z" fill="url(#gFlap)"/>
+    <path d="M6 24 52 56a14 14 0 0 0 16 0l46-32" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+  </symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.2 7 10 4-1.8 7-5.500 7-10V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.7 5 2.500 7.300 9 9-6.500 1.700-8.300 4-9 9-.7-5-2.500-7.300-9-9 6.500-1.700 8.300-4 9-9z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+</svg>
+
+<main class="stage">
+
+  <!-- Marketing side (hidden on mobile) -->
+  <section class="hero" aria-label="About Mail Pal">
+    <a class="logo" href="#" aria-label="Mail Pal home"><svg><use href="#envelope"/></svg>Mail <span>Pal</span></a>
+
+    <div class="hero-copy">
+      <p class="badge">Better Email. Together.</p>
+      <h1>Your inbox, <em>made simpler.</em></h1>
+      <p class="lede">Mail Pal helps you stay connected, organized and in control — all in one place.</p>
+
+      <ul class="features">
+        <li><svg class="icon"><use href="#i-mail"/></svg>Send &amp; receive emails</li>
+        <li><svg class="icon"><use href="#i-shield"/></svg>Secure and private</li>
+        <li><svg class="icon"><use href="#i-spark"/></svg>Clean, modern interface</li>
+      </ul>
+    </div>
+
+    <div class="art" aria-hidden="true">
+      <svg class="small s1"><use href="#envelope"/></svg>
+      <svg class="small s2"><use href="#envelope"/></svg>
+      <svg class="small s3"><use href="#envelope"/></svg>
+      <svg class="big" viewBox="0 0 120 100"><use href="#envelope"/></svg>
+    </div>
+  </section>
+
+  <!-- Sign-in card -->
+  <section class="panel">
+    <div class="card">
+      <a class="logo" href="#" aria-label="Mail Pal home"><svg><use href="#envelope"/></svg>Mail <span>Pal</span></a>
+      <h2>Sign in</h2>
+      <p class="sub">Welcome back! Please enter your details to continue.</p>
+
+      <form id="signin" novalidate>
+        <div class="field">
+          <label for="username">Username or Email</label>
+          <div class="input">
+            <svg class="icon" aria-hidden="true"><use href="#i-user"/></svg>
+            <input id="username" name="email" type="text" autocomplete="email" placeholder="Enter your email" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input">
+            <svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+            <button class="toggle" type="button" aria-label="Show password" aria-pressed="false">
+              <svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <label class="check"><input type="checkbox" name="remember"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+          Sign in <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+
+        <div class="divider">or</div>
+
+        <button class="btn btn-google" type="button">
+          <svg class="g" viewBox="0 0 18 18" aria-hidden="true">
+            <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33z"/>
+            <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <p class="signup">Don't have an account? <a href="#">Sign up</a></p>
       </form>
-    
 
+      <div class="mobile-art" aria-hidden="true">
+        <svg class="small"><use href="#envelope"/></svg>
+        <svg class="big" viewBox="0 0 120 100"><use href="#envelope"/></svg>
+      </div>
+    </div>
+  </section>
+</main>
 
-    <script>
-      const backendURL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+<script>
+  const backendURL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
         ? "http://localhost:8080"
         : "https://gg7bbqpl-8080.uks1.devtunnels.ms";
-      
-       const form = document.querySelector("form");
-        
-        form.addEventListener("submit", async (e)=>{
-           e.preventDefault();
-             
-              const email = document.querySelector("#email");
-              const password = document.querySelector("#password");
-           
-              const signInData = {
-                email: email.value,
-                password: password.value
-              }
 
+  const form = document.querySelector('#signin');
+  const password = form.elements.password;
+  const toggle = form.querySelector('.toggle'); 
 
-           try {
-            const signin = await fetch(`${backendURL}/auth/signin`, {
-                method: "POST",
-                headers:{
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(signInData)
-            })
+  toggle.addEventListener('click', () => {
+    const show = password.type === 'password';
+    password.type = show ? 'text' : 'password';
+    toggle.setAttribute('aria-pressed', show);
+    toggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+  });
 
-            
-
-             if (signin.redirected) {
-              window.location.href = signin.url;
-              return;
-             } else {
-              console.log(todo.message);
-             }
-            
-            let data = await signin.json();
-            console.log(data.message);
-            
-           } catch (error) {
-             console.log(`error: ${error}`);
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const { email, password } = form.elements;
     
-           }
+    const signInData = { email: email.value,  password: password.value };
 
-        });
+    try {
 
-       
-    </script>
+      const signIn = await fetch(`${backendURL}/auth/signin`,{
+        method: 'POST',
+        headers:{
+          'Content-type': "application/json"
+        },
+        body: JSON.stringify(signInData)
+      });
+
+      
+      
+      if (signIn.redirected) {
+        window.location.href = signIn.url;
+        return;
+      } else{
+        console.log(signIn.message);
+        
+      };
+     
+    const data = await signIn.json();
+
+      if (data.message === 'USER_NOT_FOUND') {
+        alert(`user not found`)
+      } else if (data.message === 'INVALID_CREDENTIALS') {
+         alert(`invalid email or password`)
+      } else {
+        alert(`something went wrong`)
+      };
+      
+    } catch (error) {
+      console.log(`error: ${error}`);
+      
+    }
+
+    
+
+  });
+</script>
 </body>
 </html>

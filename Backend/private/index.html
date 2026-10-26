@@ -3,107 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>main</title>
+    <title>Responsive Layout</title>
+    <!-- Import DM Sans font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+  <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
 </head>
 <body>
-     <h1>Main Page</h1>
-     <form action="">
-        <input id="send-to" placeholder="send to?" type="text">
-        <input id="subject" placeholder="subject" type="text">
-        <textarea placeholder="body" name="body" id="body"></textarea>
-        <button>send</button>
-     </form>
 
-     </div>
-     <script>
-        const backendURL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-        ? "http://localhost:8080"
-        : "https://gg7bbqpl-8080.uks1.devtunnels.ms";
+    <div class="app-container">
+        <!-- Overlay for blurring background -->
+        <div class="overlay" id="overlay"></div>
 
-        let form = document.querySelector("form");
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+          <div class="logo-con">
+              <img id="logo" src="/images/logo.png" alt="">
+          </div>
+          <div class="compose-con">
+            <button id="compose-btn"> + Compose</button>
+          </div>
+          <div class="pages-con">
+             <ul class="pages">
+              <li>Inbox</li>
+              <li>Starred</li>
+              <li>Sent</li>
+              <li>Draft</li>
+             </ul>
+          </div>
+            
+        </aside>
 
-        form.addEventListener("submit", async (e) => {
-             let sendTo = document.querySelector("#send-to");
-             let subject = document.querySelector("#subject");
-             let body = document.querySelector("#body");
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Navbar -->
+            <header class="navbar">
+                <div class="nav-left">
+                    <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 6H20M4 12H20M4 18H20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="nav-title">nav</div>
+                </div>
+                <div class="user-profile">user</div>
+            </header>
 
-            e.preventDefault()
-            try {
-                const details = {
-                   sentTo: sendTo.value,
-                   subject: subject.value,
-                   body: body.value
-                }
-             const sendMessage = await fetch(`${backendURL}/mail/sendMessage`, {
-                method: "POST",
-                headers:{
-                 "Content-type": "application/json"  
-                },
-                body: JSON.stringify(details)
-             });
+            <!-- Page Content -->
+            <section class="content-area">
+                <!-- Content goes here -->
+            </section>
+        </main>
+    </div>
+   
 
-             const data = await sendMessage.json()
-             console.log(sendTo.value);
-             
-             console.log(data);
-             
-            } catch (error) {
-                console.log(error);
-                
-            }
-        })
-        /*
-         let mailBox =  document.querySelector(".mail");
-        let sentBox = document.querySelector(".sentMessages");
-        let btn = document.querySelector("#sent-btn");
-
-        window.addEventListener("DOMContentLoaded", async () => {
-            try {
-              const readInbox = await fetch(`http://localhost:8080/mail/readMessages`);
-              let data = await readInbox.json()
-              console.log(data);
-              
-               data.message.forEach(message => {
-                let subject = document.createElement("h1");
-                let body = document.createElement("p");
-
-                subject.textContent = message.subject;
-                body.textContent = message.body;
-
-                mailBox.append(subject, body)
-
-             });
-              
-            } catch (error) {
-                console.log(error);
-            }
-        });
-
-        btn.addEventListener("click", async () => {
-            try {
-
-              const readSent = await fetch(`http://localhost:8080/mail/readSent`);
-              let data = await readSent.json()
-              console.log(data);
-               data.message.forEach(message => {
-                let subject = document.createElement("h1");
-                let body = document.createElement("p");
-
-                subject.textContent = message.subject;
-                body.textContent = message.body;
-
-                sentBox.append(subject, body)
-               })
-                
-            } catch (error) {
-                console.log(error);
-                
-            }
-        });
-
-        */
-       
-
-     </script>
 </body>
 </html>

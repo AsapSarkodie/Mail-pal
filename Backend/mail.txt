@@ -49,3 +49,145 @@ calls a service, and sends the response (res.json, status codes).
 
 Service: handles the business logic and database work. 
 It knows nothing about req or res. It just takes plain data, does the work, and returns a result.
+
+
+/*
+       const backendURL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://localhost:8080"
+        : "https://gg7bbqpl-8080.uks1.devtunnels.ms";
+      
+       const form = document.querySelector("form");
+        
+        form.addEventListener("submit", async (e)=>{
+           e.preventDefault();
+             
+              const email = document.querySelector("#email");
+              const password = document.querySelector("#password");
+           
+              const signInData = {
+                email: email.value,
+                password: password.value
+              };
+
+
+           try {
+            const signin = await fetch(`${backendURL}/auth/signin`, {
+                method: "POST",
+                headers:{
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(signInData)
+            })
+
+            
+
+             if (signin.redirected) {
+              window.location.href = signin.url;
+              return;
+             } else {
+              console.log(todo.message);
+             }
+            
+            let data = await signin.json();
+            console.log(data.message);
+            
+           } catch (error) {
+             console.log(`error: ${error}`);
+    
+           }
+
+        });
+
+      */
+
+      //for the main page
+       <script>
+        const backendURL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://localhost:8080"
+        : "https://gg7bbqpl-8080.uks1.devtunnels.ms";
+
+        let form = document.querySelector("form");
+
+        form.addEventListener("submit", async (e) => {
+             let sendTo = document.querySelector("#send-to");
+             let subject = document.querySelector("#subject");
+             let body = document.querySelector("#body");
+
+            e.preventDefault()
+            try {
+                const details = {
+                   sentTo: sendTo.value,
+                   subject: subject.value,
+                   body: body.value
+                }
+             const sendMessage = await fetch(`${backendURL}/mail/sendMessage`, {
+                method: "POST",
+                headers:{
+                 "Content-type": "application/json"  
+                },
+                body: JSON.stringify(details)
+             });
+
+             const data = await sendMessage.json()
+             console.log(sendTo.value);
+             
+             console.log(data);
+             
+            } catch (error) {
+                console.log(error);
+                
+            }
+        })
+        /*
+         let mailBox =  document.querySelector(".mail");
+        let sentBox = document.querySelector(".sentMessages");
+        let btn = document.querySelector("#sent-btn");
+
+        window.addEventListener("DOMContentLoaded", async () => {
+            try {
+              const readInbox = await fetch(`http://localhost:8080/mail/readMessages`);
+              let data = await readInbox.json()
+              console.log(data);
+              
+               data.message.forEach(message => {
+                let subject = document.createElement("h1");
+                let body = document.createElement("p");
+
+                subject.textContent = message.subject;
+                body.textContent = message.body;
+
+                mailBox.append(subject, body)
+
+             });
+              
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        btn.addEventListener("click", async () => {
+            try {
+
+              const readSent = await fetch(`http://localhost:8080/mail/readSent`);
+              let data = await readSent.json()
+              console.log(data);
+               data.message.forEach(message => {
+                let subject = document.createElement("h1");
+                let body = document.createElement("p");
+
+                subject.textContent = message.subject;
+                body.textContent = message.body;
+
+                sentBox.append(subject, body)
+               })
+                
+            } catch (error) {
+                console.log(error);
+                
+            }
+        });
+
+        */
+       
+
+     </script>
