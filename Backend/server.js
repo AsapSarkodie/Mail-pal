@@ -50,4 +50,4 @@ app.get("/", getLoginPage);
 
 app.listen(PORT, ()=>{
     console.log(`Mail server is running on port:${PORT}`);        
-});
+}); 
