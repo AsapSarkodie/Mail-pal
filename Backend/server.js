@@ -45,7 +45,7 @@ app.use(express.static('public'));
 //routes
 app.use('/auth', authentication);
 app.use('/mail', messagesRoute);
-app.get("/", getSignUpPage);
+app.get("/", getLoginPage);
 
 
 app.listen(PORT, ()=>{
