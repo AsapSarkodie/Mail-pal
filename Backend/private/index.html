@@ -92,34 +92,72 @@
           </div>
 
           <div class="main-messages-page">
-            <div class="messages-box"></div>
+            <div id="cardContainer" class="messages-box">
+              <ul class="card-container">
+               <!--card will come here-->
+              </ul>
+            </div>
 
-            <div id="compose-box" class="compose-box">
-              <div class="compose-header">
-                <span>New message</span>
-                <button class="close-btn" aria-label="Close">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M18 6L6 18M6 6l12 12"></path>
+                        <!-- ===== FULL MESSAGE VIEW (reading pane) ===== -->
+            <!-- Hidden by default; app.js adds the .open class to slide it in -->
+            <div id="message-view" class="message-view" aria-hidden="true">
+
+              <!-- Top action bar: back + star + delete -->
+              <div class="message-view-header">
+                <button id="back-btn" class="msg-icon-btn" type="button" aria-label="Back to messages">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
                   </svg>
                 </button>
+
+                <div class="message-view-actions">
+                  <button id="view-star-btn" class="msg-icon-btn" type="button" aria-label="Star message">☆</button>
+                  <button id="view-delete-btn" class="msg-icon-btn" type="button" aria-label="Delete message">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      <line x1="10" y1="11" x2="10" y2="17"></line>
+                      <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Scrollable message content -->
+              <div class="message-view-body">
+                <h2 id="view-subject" class="message-view-subject"></h2>
+
+                <div class="message-view-meta">
+                  <img id="view-avatar" class="message-avatar" src="/images/logo.png" alt="" />
+                  <div class="message-view-sender-info">
+                    <span id="view-sender" class="message-view-sender"></span>
+                    <span id="view-recipient" class="message-view-recipient"></span>
+                  </div>
+                  <span id="view-time" class="message-time"></span>
+                </div>
+
+                <div id="view-body" class="message-view-text"></div>
+              </div>
+            </div>
+
+            <form id="compose-box" class="compose-box">
+              <div class="compose-header">  
+                <span>New message</span> <span><img id="close-compose" src="/images/close.png" alt=""></span>
+        
               </div>
               <div class="compose-input-row">
                 <label>To</label>
-                <input type="text" placeholder="" />
+                <input class="reciever" type="text" placeholder="send to?" name="reciever" />
                 <span class="cc-bcc">Cc Bcc</span>
               </div>
               <div class="compose-input-row">
-                <input type="text" placeholder="Subject" />
+                <input id="subject" type="text" placeholder="Subject" />
               </div>
               <div class="compose-body">
-                <textarea
+                <textarea id="message-body"
                   placeholder="Write something thoughtful..."
                 ></textarea>
               </div>
@@ -171,7 +209,7 @@
                   </svg>
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </section>
       </main>

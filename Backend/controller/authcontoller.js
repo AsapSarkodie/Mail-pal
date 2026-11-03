@@ -26,9 +26,13 @@ const registerUser = async (req, res) => {
     //check if storage was successful
     if (inputUser) {
         console.log(`user registered`);
-        return res.status(201).json({message: 'USER_CREATED_SUCCESSFULLY'})
+        return res.status(201).json({
+            message: 'USER_CREATED_SUCCESSFULLY', 
+            success: true,
+            redirectUrl: '/auth/signinpage'
+        });
     }
-        
+    
     } catch (error) {
         console.log(`error: ${error}`);
         return res.status(500).json({ message: 'SERVER_ERROR' });
@@ -90,7 +94,11 @@ const signInUser = async (req, res) => {
 //serve login page
 
 function getLoginPage(req, res) {
-    res.sendFile(path.join(import.meta.dirname, "..", "public", "signIn.html" ))
-}
+    res.sendFile(path.join(import.meta.dirname, "..", "public", "signIn.html" ));
+};
 
-export {registerUser, signInUser, getLoginPage}
+function getSignUpPage(req, res) {
+    res.sendFile(path.join(import.meta.dirname, "..", "public", "signUp.html" ));
+};
+//can next be placed under the return keyword
+export {registerUser, signInUser, getLoginPage, getSignUpPage}

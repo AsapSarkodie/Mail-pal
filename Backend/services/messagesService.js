@@ -20,7 +20,7 @@ const saveMessage = async (sentBy, sentTo, subject, body) => {
 const readInbox = async (sentTo) =>{
     try {
         const inbox = await pool.query(`
-            SELECT subject, body, starred, is_read FROM messages 
+            SELECT subject, body, starred, is_read, sent_at, sent_by FROM messages 
             WHERE sent_to = $1`, [sentTo]);
 
     //check if message is empty

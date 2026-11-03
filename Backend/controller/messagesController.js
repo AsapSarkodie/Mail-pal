@@ -41,11 +41,14 @@ const sendMessage = async (req, res) => {
     const save = await saveMessage(sentBy, sentTo, subject, body);
 
     console.log(save);
+    if (save) {
+        return res.status(201).json({
+        message: `MESSAGE_SENT_SUCESSFULLY`
+    })
+    };
     console.log(`message sent..`);
     
-    return res.status(201).json({
-        message: `MESSAGE SENT SUCESSFULLY`
-    })
+    
     } catch (error) {
         console.log(error);
     };

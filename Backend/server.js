@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 dotenv.config()
 import { authentication } from './routes/authroute.js';
 import { messagesRoute } from './routes/messagesRoute.js';
-import { getLoginPage } from './controller/authcontoller.js';
+import { getLoginPage, getSignUpPage } from './controller/authcontoller.js';
 
 
 
@@ -45,7 +45,7 @@ app.use(express.static('public'));
 //routes
 app.use('/auth', authentication);
 app.use('/mail', messagesRoute);
-app.get("/", getLoginPage);
+app.get("/", getSignUpPage);
 
 
 app.listen(PORT, ()=>{
