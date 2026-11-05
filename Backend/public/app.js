@@ -197,7 +197,7 @@ function openMessage(message, refs = {}) {
   viewRecipient.textContent = message.sent_to ? `to ${message.sent_to}` : "";
   viewTime.textContent      = formatTimestamp(message.sent_at);
   viewBody.textContent      = message.body || "";
-  viewAvatar.src            = "/images/logo.png";
+  viewAvatar.src            = "http://localhost:8080/images/user.png";
   viewAvatar.alt            = `${displayName(message.sent_by || "")} avatar`;
 
   syncViewStar();
@@ -274,6 +274,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     cardContainer.innerHTML = "";
 
     all.forEach((m) => {
+     localStorage.setItem("username", m.sent_to)
       // Create elements
       const card    = document.createElement("li");
       const checkbox = document.createElement("input");
@@ -320,7 +321,9 @@ window.addEventListener("DOMContentLoaded", async () => {
       });
 
       // Default avatar
-      avatar.src = "/images/logo.png";
+      avatar.src = `http://localhost:8080/images/user.png`;
+      
+      
       avatar.alt = "Default avatar";
 
       // Message data
@@ -362,3 +365,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     console.error("Unable to load inbox:", error);
   }
 });
+
+//load userinfo
+let user = localStorage.getItem("username")
+console.log(user);

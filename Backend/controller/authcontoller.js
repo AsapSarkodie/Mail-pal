@@ -100,5 +100,12 @@ function getLoginPage(req, res) {
 function getSignUpPage(req, res) {
     res.sendFile(path.join(import.meta.dirname, "..", "public", "signUp.html" ));
 };
+
+const loadUserInfo = async (req, res) =>{
+    /*
+    need username to fetch data. so include it to the messages obj
+     */
+
+};
 //can next be placed under the return keyword
 export {registerUser, signInUser, getLoginPage, getSignUpPage}
