@@ -5,6 +5,8 @@ const sendMessage = async (req, res) => {
     //destructure request body
     const {sentTo, subject, body} = req.body;
     const sentBy = req.user.email;
+    const file = req.file;
+
     try {
      
     //check if user has a token

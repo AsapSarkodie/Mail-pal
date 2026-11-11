@@ -107,3 +107,54 @@ compose.addEventListener("click", (event) => {
   if (action.matches("[data-compose-minimize]")) compose.classList.toggle("is-minimized");
   if (action.matches("[data-compose-expand]")) compose.classList.toggle("is-expanded");
 });
+
+//my code
+//start with displaying the name at the compose box
+const composeBoxUserName = document.querySelector(".compose__from strong");
+const profileEmail = document.querySelector(".profile__email");
+const profileName = document.querySelector(".profile__name");
+const avatar = document.querySelector(".avatar");
+window.addEventListener("DOMContentLoaded", async ()=>{
+
+  try {
+    const getEmailOfUser = await fetch('http://localhost:8080/auth/user-info');
+    const userInfo = await getEmailOfUser.json(); 
+    //assign their names
+    composeBoxUserName.textContent = userInfo.userEmail;
+    profileEmail.textContent = userInfo.userEmail;
+    profileName.textContent = userInfo.username;
+    
+    let sc = userInfo.username.split("");
+    avatar.textContent = `${sc[0]}${sc[sc.length - 1]}`
+  } catch (error) {
+    console.log(error);
+  };    
+});
+
+//send email 
+const form = document.querySelector('#compose');
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  //get elements
+  let sendTo = document.querySelector("#to");
+  let subject = document.querySelector("#subject");
+  let body = document.querySelector("#body");
+  let inputFile = document.querySelector("#attachments");
+  
+  let composeData = new FormData();
+
+  //add their values to the form
+
+  composeData.append("sendTo", sendTo.value);
+  composeData.append("subject", subject.value);
+  composeData.append("body", body.value);
+  for (const file of inputFile.files) {
+    composeData.append("file", file)
+  };
+
+  console.log(composeData);
+  
+  
+  
+});

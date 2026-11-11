@@ -21,7 +21,6 @@ async function saveUser(username, email, hashedPassword, profile) {
 
 //findUser
 async function findUser(email) {
-    
     try {
         const lookupUser = await pool.query(`SELECT * FROM users WHERE email = $1`, [email])
 

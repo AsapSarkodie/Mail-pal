@@ -172,8 +172,8 @@
           <button class="profile" type="button" aria-label="Account menu">
             <span class="avatar">OF</span>
             <span class="profile__info">
-              <span class="profile__name">Olivia Foster</span>
-              <span class="profile__email">olivia.foster@bravebunny.co</span>
+              <span class="profile__name"></span>
+              <span class="profile__email"></span>
             </span>
             <svg class="icon icon-sm"><use href="#i-chevron-down" /></svg>
           </button>
@@ -189,61 +189,64 @@
     </main>
   </div>
 
-  <!-- ============ COMPOSE WINDOW ============ -->
-  <section class="compose" id="compose" aria-label="New message" hidden>
-    <header class="compose__header">
-      <button class="compose__from" type="button">New message from: <strong>olivia.foster@bravebunny.co</strong>
-        <svg class="icon icon-sm"><use href="#i-chevron-down" /></svg>
-      </button>
-      <div class="compose__window-actions">
-        <button class="icon-btn" type="button" data-compose-minimize aria-label="Minimize"><svg class="icon"><use href="#i-minus" /></svg></button>
-        <button class="icon-btn" type="button" data-compose-expand aria-label="Expand"><svg class="icon"><use href="#i-expand" /></svg></button>
-        <button class="icon-btn icon-btn--filled" type="button" data-compose-close aria-label="Close"><svg class="icon"><use href="#i-x" /></svg></button>
-      </div>
-    </header>
-
-    <div class="compose__fields">
-      <div class="field">
-        <label class="field__label" for="to">To:</label>
-        <input class="field__input" id="to" type="email" placeholder="Recipient" />
-        <span class="field__cc">CC</span><span class="field__cc">BCC</span>
-      </div>
-      <div class="field">
-        <label class="field__label" for="subject">Subject:</label>
-        <input class="field__input" id="subject" type="text" placeholder="Subject" />
-      </div>
+ <!-- ============ COMPOSE WINDOW ============ -->
+<form class="compose" id="compose" aria-label="New message" action="/send" method="post" enctype="multipart/form-data" hidden>
+  <header class="compose__header">
+    <button class="compose__from" type="button">New message from: <strong></strong>
+      <svg class="icon icon-sm"><use href="#i-chevron-down" /></svg>
+    </button>
+    <input type="hidden" name="from" value="" />
+    <div class="compose__window-actions">
+      <button class="icon-btn" type="button" data-compose-minimize aria-label="Minimize"><svg class="icon"><use href="#i-minus" /></svg></button>
+      <button class="icon-btn" type="button" data-compose-expand aria-label="Expand"><svg class="icon"><use href="#i-expand" /></svg></button>
+      <button class="icon-btn icon-btn--filled" type="button" data-compose-close aria-label="Close"><svg class="icon"><use href="#i-x" /></svg></button>
     </div>
+  </header>
 
-    <div class="compose__body" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Message body" data-placeholder="Write your message..."></div>
-
-    <div class="format-bar" role="toolbar" aria-label="Text formatting">
-      <button class="icon-btn" type="button" aria-label="Bold"><svg class="icon icon-sm"><use href="#i-bold" /></svg></button>
-      <button class="icon-btn" type="button" aria-label="Italic"><svg class="icon icon-sm"><use href="#i-italic" /></svg></button>
-      <button class="icon-btn" type="button" aria-label="Underline"><svg class="icon icon-sm"><use href="#i-underline" /></svg></button>
-      <button class="icon-btn" type="button" aria-label="Strikethrough"><svg class="icon icon-sm"><use href="#i-strike" /></svg></button>
-      <button class="icon-btn" type="button" aria-label="Align"><svg class="icon icon-sm"><use href="#i-align" /></svg></button>
-      <button class="icon-btn" type="button" aria-label="List"><svg class="icon icon-sm"><use href="#i-list" /></svg></button>
-      <button class="icon-btn" type="button" aria-label="Link"><svg class="icon icon-sm"><use href="#i-link" /></svg></button>
-      <button class="icon-btn" type="button" aria-label="More formatting"><svg class="icon icon-sm"><use href="#i-more" /></svg></button>
+  <div class="compose__fields">
+    <div class="field">
+      <label class="field__label" for="to">To:</label>
+      <input class="field__input" id="to" name="to" type="email" placeholder="Recipient" multiple required />
+      <span class="field__cc">CC</span><span class="field__cc">BCC</span>
     </div>
+    <div class="field">
+      <label class="field__label" for="subject">Subject:</label>
+      <input class="field__input" id="subject" name="subject" type="text" placeholder="Subject" />
+    </div>
+  </div>
 
-    <footer class="compose__footer">
-      <div class="send-group">
-        <button class="btn-send" type="button">Send</button>
-        <button class="btn-send btn-send--icon" type="button" aria-label="Schedule send"><svg class="icon icon-sm"><use href="#i-calendar" /></svg></button>
-      </div>
-      <div class="compose__tools">
-        <button class="icon-btn" type="button" aria-label="Attach file"><svg class="icon"><use href="#i-paperclip" /></svg></button>
-        <button class="icon-btn" type="button" aria-label="Emoji"><svg class="icon"><use href="#i-smile" /></svg></button>
-        <button class="icon-btn" type="button" aria-label="Insert image"><svg class="icon"><use href="#i-image" /></svg></button>
-        <button class="icon-btn" type="button" aria-label="Templates"><svg class="icon"><use href="#i-file-text" /></svg></button>
-        <button class="icon-btn" type="button" aria-label="Signature"><svg class="icon"><use href="#i-pen" /></svg></button>
-        <button class="icon-btn" type="button" aria-label="Confidential mode"><svg class="icon"><use href="#i-lock" /></svg></button>
-        <button class="icon-btn" type="button" aria-label="More options"><svg class="icon"><use href="#i-more-v" /></svg></button>
-      </div>
-      <button class="icon-btn" type="button" data-compose-close aria-label="Discard draft"><svg class="icon"><use href="#i-trash" /></svg></button>
-    </footer>
-  </section>
+  <textarea class="compose__body" id="body" name="body" aria-label="Message body" placeholder="Write your message..." required></textarea>
 
+  <div class="format-bar" role="toolbar" aria-label="Text formatting">
+    <button class="icon-btn" type="button" aria-label="Bold"><svg class="icon icon-sm"><use href="#i-bold" /></svg></button>
+    <button class="icon-btn" type="button" aria-label="Italic"><svg class="icon icon-sm"><use href="#i-italic" /></svg></button>
+    <button class="icon-btn" type="button" aria-label="Underline"><svg class="icon icon-sm"><use href="#i-underline" /></svg></button>
+    <button class="icon-btn" type="button" aria-label="Strikethrough"><svg class="icon icon-sm"><use href="#i-strike" /></svg></button>
+    <button class="icon-btn" type="button" aria-label="Align"><svg class="icon icon-sm"><use href="#i-align" /></svg></button>
+    <button class="icon-btn" type="button" aria-label="List"><svg class="icon icon-sm"><use href="#i-list" /></svg></button>
+    <button class="icon-btn" type="button" aria-label="Link"><svg class="icon icon-sm"><use href="#i-link" /></svg></button>
+    <button class="icon-btn" type="button" aria-label="More formatting"><svg class="icon icon-sm"><use href="#i-more" /></svg></button>
+  </div>
+
+  <footer class="compose__footer">
+    <div class="send-group">
+      <button class="btn-send" type="submit">Send</button>
+      <button class="btn-send btn-send--icon" type="button" aria-label="Schedule send"><svg class="icon icon-sm"><use href="#i-calendar" /></svg></button>
+    </div>
+    <div class="compose__tools">
+      <label class="icon-btn" for="attachments" aria-label="Attach file" role="button" tabindex="0">
+        <svg class="icon"><use href="#i-paperclip" /></svg>
+      </label>
+      <input id="attachments" name="attachments" type="file" hidden />
+      <button class="icon-btn" type="button" aria-label="Emoji"><svg class="icon"><use href="#i-smile" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="Insert image"><svg class="icon"><use href="#i-image" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="Templates"><svg class="icon"><use href="#i-file-text" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="Signature"><svg class="icon"><use href="#i-pen" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="Confidential mode"><svg class="icon"><use href="#i-lock" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="More options"><svg class="icon"><use href="#i-more-v" /></svg></button>
+    </div>
+    <button class="icon-btn" type="reset" data-compose-close aria-label="Discard draft"><svg class="icon"><use href="#i-trash" /></svg></button>
+  </footer>
+</form>
 </body>
 </html>

@@ -103,10 +103,12 @@ function getSignUpPage(req, res) {
 };
 
 const loadUserInfo = async (req, res) =>{
-    /*
-    need username to fetch data. so include it to the messages obj
-     */
-
+    const user = req.user;
+    try {
+       return res.json({userEmail: user.email, username: user.username});
+    } catch (error) {
+        console.log(error);
+    }
 };
 //can next be placed under the return keyword
-export {registerUser, signInUser, getLoginPage, getSignUpPage}
+export {registerUser, signInUser, getLoginPage, getSignUpPage, loadUserInfo}
