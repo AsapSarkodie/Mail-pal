@@ -7,7 +7,7 @@ const saveMessage = async (sentBy, sentTo, subject, body, filePath) => {
     //save message
     const save = await pool.query(`
     INSERT INTO messages (sent_by, sent_to, subject, body, file_path) 
-    VALUES ($1, $2, $3, $4) RETURNING sent_by, sent_to, subject, body `, [sentBy, sentTo, subject, body]);
+    VALUES ($1, $2, $3, $4, $5) RETURNING sent_by, sent_to, subject, body, file_path `, [sentBy, sentTo, subject, body, filePath.path]);
 
     return save.rows[0]
         

@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         const dir = 'documents';
         if (!fs.existsSync(dir)) {
-            fs.mkdir(dir)
+            fs.mkdirSync(dir)
         }
         cb(null, dir)
     },

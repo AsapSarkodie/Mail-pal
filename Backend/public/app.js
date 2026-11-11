@@ -137,6 +137,8 @@ const form = document.querySelector('#compose');
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   //get elements
+  try {
+    
   let sendTo = document.querySelector("#to");
   let subject = document.querySelector("#subject");
   let body = document.querySelector("#body");
@@ -149,12 +151,21 @@ form.addEventListener("submit", async (e) => {
   composeData.append("sendTo", sendTo.value);
   composeData.append("subject", subject.value);
   composeData.append("body", body.value);
-  for (const file of inputFile.files) {
-    composeData.append("file", file)
-  };
+  composeData.append("attachments", inputFile.files[0]);
 
-  console.log(composeData);
+  const sendMessage = await fetch(`http://localhost:8080/mail/sendMessage`, {
+    method: "POST",
+    body: composeData
+  });
+
+  let response = await sendMessage.json();
+  console.log(response);
+  console.log(sendTo.value);
   
   
-  
+  } catch (error) {
+    console.log(error);
+    
+  };
+   
 });

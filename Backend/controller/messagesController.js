@@ -3,7 +3,7 @@ import { saveMessage, readInbox, readSent } from "../services/messagesService.js
 const sendMessage = async (req, res) => {
     
     //destructure request body
-    const {sentTo, subject, body} = req.body;
+    const {sendTo, subject, body} = req.body;
     const sentBy = req.user.email;
     const file = req.file;
 
@@ -15,7 +15,7 @@ const sendMessage = async (req, res) => {
      return res.json({message: "NOT_AUTHORIZED"})
     }
 
-    if (!sentTo) {
+    if (!sendTo) {
         console.log('no receiver');
         return res.status(404).json({message: `RECEIVER_NOT_FOUND`});
     }
@@ -31,7 +31,7 @@ const sendMessage = async (req, res) => {
     }
 
     //check if user is sending message to himself bg
-    if (sentBy === sentTo) {
+    if (sentBy === sendTo) {
         console.log(`cant send message to yourself`);
         return res.json({message: `CAN_NOT_SEND_MESSAGE_TO_YOURSELF`})
     };
@@ -40,7 +40,7 @@ const sendMessage = async (req, res) => {
     
 
     //save to database
-    const save = await saveMessage(sentBy, sentTo, subject, body);
+    const save = await saveMessage(sentBy, sendTo, subject, body, file);
 
     console.log(save);
     if (save) {
