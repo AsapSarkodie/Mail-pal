@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { verifyCookie, accessIdFromCookie } from "../middleware/jwt.js ";
 import { sendMessage, readInboxMessage, readSentMessages } from "../controller/messagesController.js";
+import  upload from '../middleware/files.js'
 import path from "path"
 
 
@@ -14,7 +15,7 @@ messagesRoute.get('/mainpage', verifyCookie, async (req, res)=>{
 });
 
 //post or send a message
-messagesRoute.post('/sendMessage',accessIdFromCookie, sendMessage);
+messagesRoute.post('/sendMessage',accessIdFromCookie, upload.single('attachments'), sendMessage);
 
 
 //read inbox message based on id.
