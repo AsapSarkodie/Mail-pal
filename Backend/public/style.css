@@ -1,0 +1,372 @@
+/* ==========================================================
+   1. TOKENS & RESET
+   ========================================================== */
+:root {
+  --bg: #f4f4f6;
+  --surface: #ffffff;
+  --text: #16171a;
+  --muted: #7b7e87;
+  --border: #e9e9ee;
+  --hover: #ececf0;
+  --accent: #16171a;
+  --accent-text: #ffffff;
+  --star: #16171a;
+  --radius: 12px;
+  --sidebar-w: 260px;
+  --list-w: 360px;
+  --header-h: 64px;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+h1, h2, h3, p { margin: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Label colors. Add data-label="name" to any element and these variables become available. */
+[data-label="studio"]      { --label-color: #16171a; --label-text: #fff; }
+[data-label="workshop"]    { --label-color: #38bdf8; --label-text: #fff; }
+[data-label="upwork"]      { --label-color: #a855f7; --label-text: #fff; }
+[data-label="partnership"] { --label-color: #a3e635; --label-text: #1a2e05; }
+[data-label="bank"]        { --label-color: #fb923c; --label-text: #fff; }
+
+/* ==========================================================
+   2. SHARED PIECES (icons, buttons)
+   ========================================================== */
+.icon {
+  width: 18px; height: 18px; flex: none;
+  fill: none; stroke: currentColor; stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.icon-sm { width: 15px; height: 15px; }
+.icon-lg { width: 28px; height: 28px; }
+.icon-xl { width: 40px; height: 40px; stroke-width: 1.4; }
+.label-icon { color: var(--label-color); fill: currentColor; }
+
+.icon-btn {
+  display: grid; place-items: center;
+  width: 32px; height: 32px; border-radius: 8px; color: var(--muted);
+}
+.icon-btn:hover { background: var(--hover); color: var(--text); }
+.icon-btn--filled { background: var(--hover); color: var(--text); }
+
+.avatar {
+  display: grid; place-items: center; flex: none;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #e7d9cc; font-size: 12px; font-weight: 600;
+}
+
+/* ==========================================================
+   3. APP LAYOUT
+   ========================================================== */
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.mail {
+  display: grid;
+  grid-template-columns: minmax(300px, var(--list-w)) minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+}
+
+.backdrop { display: none; }
+
+/* Header row shared by the search bar and the toolbar so they line up */
+.pane-header {
+  display: flex; align-items: center; gap: 8px;
+  height: var(--header-h); padding: 0 16px; flex: none;
+}
+
+/* ==========================================================
+   4. SIDEBAR
+   ========================================================== */
+.sidebar {
+  display: flex; flex-direction: column; gap: 24px;
+  padding: 20px 16px; overflow-y: auto;
+  background: var(--bg);
+}
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand__name { flex: 1; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+
+.btn-compose {
+  height: 44px; border-radius: 10px;
+  background: var(--accent); color: var(--accent-text); font-weight: 500;
+}
+.btn-compose:hover { opacity: 0.9; }
+
+.nav { display: flex; flex-direction: column; gap: 2px; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  height: 38px; padding: 0 12px; border-radius: 10px;
+  color: #5c5f68; text-align: left;
+}
+.nav-item:hover { background: var(--hover); }
+.nav-item.is-active {
+  background: var(--surface); color: var(--text); font-weight: 500;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+}
+.nav-item__label { flex: 1; }
+.nav-item__count { font-size: 12px; color: var(--muted); }
+
+.sidebar-section { display: flex; flex-direction: column; gap: 6px; }
+.sidebar-section__title {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-left: 12px; font-size: 13px; font-weight: 500; color: var(--muted);
+}
+
+/* ==========================================================
+   5. MESSAGE LIST
+   ========================================================== */
+.list-pane {
+  display: flex; flex-direction: column; min-height: 0;
+  border-right: 1px solid var(--border);
+}
+
+.search {
+  display: flex; align-items: center; gap: 8px; flex: 1;
+  height: 40px; padding: 0 14px; border-radius: 999px;
+  background: var(--bg); color: var(--muted);
+}
+.search input {
+  flex: 1; min-width: 0; border: 0; outline: 0; background: none; color: var(--text);
+}
+.search:focus-within { box-shadow: 0 0 0 2px var(--accent); }
+
+.list-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 8px 16px 12px;
+}
+.list-head__title { font-size: 20px; font-weight: 600; }
+.list-head__meta { margin-top: 2px; font-size: 12px; color: var(--muted); }
+
+.select {
+  height: 36px; padding: 0 34px 0 14px; border: 1px solid var(--border);
+  border-radius: 10px; background-color: var(--surface); cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316171a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center; background-size: 16px;
+}
+
+.mail-list {
+  list-style: none; margin: 0; padding: 0 12px 12px;
+  display: flex; flex-direction: column; gap: 4px;
+  flex: 1; overflow-y: auto;
+}
+
+/* ----------------------------------------------------------
+   MAIL CARD (ready to style the cards you fetch later)
+   ---------------------------------------------------------- */
+.mail-card {
+  display: grid; gap: 6px; padding: 12px; border-radius: var(--radius);
+  cursor: pointer; transition: background 0.15s;
+}
+.mail-card:hover { background: #f8f8fa; }
+.mail-card.is-active { background: var(--bg); }
+
+.mail-card__top { display: flex; align-items: center; gap: 8px; }
+.mail-card__sender {
+  flex: 1; min-width: 0; font-size: 13px; font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mail-card__attach { width: 14px; height: 14px; color: var(--muted); }
+.mail-card__time { flex: none; font-size: 11px; color: var(--muted); }
+
+.mail-card__title {
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mail-card__preview {
+  font-size: 12px; line-height: 1.5; color: var(--muted);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.mail-card__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* Unread = bolder sender and subject */
+.mail-card.is-unread .mail-card__sender,
+.mail-card.is-unread .mail-card__title { font-weight: 700; }
+
+.star-btn {
+  display: grid; place-items: center; width: 22px; height: 22px;
+  color: #b5b7be; border-radius: 6px;
+}
+.star-btn .icon { width: 15px; height: 15px; }
+.star-btn:hover { color: var(--star); }
+.star-btn.is-on { color: var(--star); }
+.star-btn.is-on .icon { fill: currentColor; }
+
+.tag {
+  display: inline-flex; align-items: center; height: 22px; padding: 0 10px;
+  border-radius: 999px; font-size: 11px; font-weight: 500;
+  background: var(--label-color, var(--accent)); color: var(--label-text, #fff);
+}
+
+/* ==========================================================
+   6. READING PANE
+   ========================================================== */
+.reading-pane {
+  display: flex; flex-direction: column; min-width: 0; min-height: 0;
+  background: var(--surface);
+}
+
+.toolbar { padding: 0 20px; }
+.toolbar__actions { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+
+.toolbar-btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px;
+  border-radius: 8px; color: var(--muted); white-space: nowrap;
+}
+.toolbar-btn:hover { background: var(--hover); color: var(--text); }
+.toolbar-btn.is-filled { background: var(--bg); color: var(--text); font-weight: 500; }
+
+.profile { display: flex; align-items: center; gap: 10px; padding: 4px 6px; border-radius: 10px; text-align: left; }
+.profile:hover { background: var(--bg); }
+.profile__info { display: flex; flex-direction: column; }
+.profile__name { font-size: 13px; font-weight: 600; }
+.profile__email { font-size: 11px; color: var(--muted); }
+
+.back-btn { display: none; }
+.menu-btn { display: none; }
+
+.reading-body { flex: 1; overflow-y: auto; padding: 24px; border-top: 1px solid var(--border); }
+
+.empty-state {
+  height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px; color: var(--muted);
+}
+
+/* ==========================================================
+   7. COMPOSE WINDOW
+   ========================================================== */
+.compose {
+  position: fixed; right: 16px; bottom: 16px; z-index: 40;
+  display: flex; flex-direction: column;
+  width: min(560px, calc(100vw - 32px)); max-height: calc(100dvh - 32px);
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 0.18);
+  overflow: hidden; transition: width 0.2s;
+}
+.compose.is-expanded { width: min(860px, calc(100vw - 32px)); height: calc(100dvh - 32px); }
+
+.compose__header {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 12px 14px; border-bottom: 1px solid var(--border);
+}
+.compose__from { display: flex; align-items: center; gap: 6px; font-weight: 500; min-width: 0; text-align: left; }
+.compose__from strong { font-weight: 500; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.compose__window-actions { display: flex; gap: 4px; }
+
+.field { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+.field__label { color: var(--muted); font-size: 13px; }
+.field__input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; }
+.field__cc { font-size: 12px; color: var(--muted); }
+
+.compose__body { flex: 1; min-height: 160px; padding: 16px; overflow-y: auto; outline: 0; line-height: 1.6; }
+.compose__body:empty::before { content: attr(data-placeholder); color: var(--muted); }
+
+.format-bar {
+  display: flex; align-items: center; gap: 2px; align-self: flex-start;
+  margin: 0 16px 8px; padding: 2px 6px; border: 1px solid var(--border);
+  border-radius: 10px; background: var(--surface); box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+}
+.format-bar .icon-btn { width: 28px; height: 28px; }
+
+.compose__footer { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-top: 1px solid var(--border); }
+.compose__tools { display: flex; align-items: center; gap: 2px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+
+.send-group { display: flex; gap: 1px; }
+.btn-send {
+  height: 36px; padding: 0 18px; background: var(--accent); color: var(--accent-text);
+  font-weight: 500; border-radius: 10px 4px 4px 10px;
+}
+.btn-send--icon { display: grid; place-items: center; padding: 0; width: 36px; border-radius: 4px 10px 10px 4px; }
+
+/* Minimized: only the header bar stays visible */
+.compose.is-minimized .compose__fields,
+.compose.is-minimized .compose__body,
+.compose.is-minimized .format-bar,
+.compose.is-minimized .compose__footer { display: none; }
+.compose.is-minimized { height: auto; }
+
+/* ==========================================================
+   8. RESPONSIVE
+   ========================================================== */
+
+/* Desktop only: sidebar can be collapsed with the menu button */
+@media (min-width: 901px) {
+  .app.is-sidebar-collapsed { grid-template-columns: minmax(0, 1fr); }
+  .app.is-sidebar-collapsed .sidebar { display: none; }
+  .app.is-sidebar-collapsed .menu-btn { display: grid; }
+}
+
+/* Smaller laptops: narrower list, icon-only toolbar */
+@media (max-width: 1200px) {
+  :root { --list-w: 320px; }
+  .toolbar-btn span { display: none; }
+  .toolbar-btn { width: 34px; justify-content: center; padding: 0; }
+}
+
+/* Tablets & phones: sidebar becomes a drawer, reading pane a full-screen panel */
+@media (max-width: 900px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .mail { grid-template-columns: minmax(0, 1fr); }
+  .menu-btn, .back-btn { display: grid; }
+
+  .sidebar {
+    position: fixed; inset: 0 auto 0 0; z-index: 60;
+    width: min(290px, 85vw);
+    transform: translateX(-100%); visibility: hidden;
+    transition: transform 0.25s, visibility 0.25s;
+  }
+  .app.is-sidebar-open .sidebar { transform: none; visibility: visible; }
+
+  .backdrop {
+    display: block; position: fixed; inset: 0; z-index: 50;
+    background: rgb(0 0 0 / 0.4); opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .app.is-sidebar-open .backdrop { opacity: 1; pointer-events: auto; }
+
+  .list-pane { border-right: 0; }
+
+  .reading-pane {
+    position: fixed; inset: 0; z-index: 30;
+    transform: translateX(100%); visibility: hidden;
+    transition: transform 0.25s, visibility 0.25s;
+  }
+  .app.is-reading-open .reading-pane { transform: none; visibility: visible; }
+
+  .compose { inset: 0; width: auto; max-height: none; border-radius: 0; border: 0; }
+  .compose.is-expanded { width: auto; height: auto; }
+  .compose.is-minimized { inset: auto 0 0 0; }
+}
+
+@media (max-width: 640px) {
+  .profile__info { display: none; }
+  .toolbar { padding: 0 12px; }
+  .pane-header { padding: 0 12px; }
+  .list-head { padding: 8px 12px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

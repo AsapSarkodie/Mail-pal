@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import path from 'path';
 
-//logic for registering a user
+//REGISTER A USER
 const registerUser = async (req, res) => {
     //destructure incoming data
     const {username, email, password} = req.body;
@@ -39,7 +39,8 @@ const registerUser = async (req, res) => {
     }  
 };
 
-//Sign-in 
+
+//SIGN A USER IN
 const signInUser = async (req, res) => {
     console.log(`form is working and is accessing the signin route`);
     
@@ -64,7 +65,7 @@ const signInUser = async (req, res) => {
     const user = lookUpUser.rows[0];
 
     //check for password mismatch
-    const isMatch = await bcrypt.compare(password, user.password_hash);
+    const isMatch = await bcrypt.compare(password, user.hash_password);
     
     //check for a mismatch
     if (!isMatch) {

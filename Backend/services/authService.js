@@ -6,7 +6,7 @@ async function saveUser(username, email, hashedPassword, profile) {
 
      //register user info into database.
       const register = await pool.query(`
-        INSERT INTO users (username, email, password_hash, profile_picture) 
+        INSERT INTO users (username, email, hash_password, profile_picture) 
         VALUES ($1, $2, $3, $4) RETURNING id, username, email, profile_picture
         `, [username, email, hashedPassword, profile])
 

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mail Pal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/app.js" defer></script>
+</head>
+<body>
+
+  <!-- Icon sprite: use any icon with <svg class="icon"><use href="#i-name" /></svg> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-logo" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></symbol>
+    <symbol id="i-file-text" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></symbol>
+    <symbol id="i-spam" viewBox="0 0 24 24"><path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2z"/><path d="M12 8v4M12 16h.01"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z"/><path d="M7.5 7.5h.01"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-reply" viewBox="0 0 24 24"><path d="m9 17-5-5 5-5"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></symbol>
+    <symbol id="i-forward" viewBox="0 0 24 24"><path d="m15 17 5-5-5-5"/><path d="M4 18v-2a4 4 0 0 1 4-4h12"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8M10 12h4"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-paperclip" viewBox="0 0 24 24"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></symbol>
+    <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.38 3.62a2.12 2.12 0 0 1 3 3L7.37 18.63a2 2 0 0 1-.86.5l-2.87.84a.5.5 0 0 1-.62-.62l.84-2.87a2 2 0 0 1 .5-.85z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18"/><rect width="18" height="18" x="3" y="4" rx="2"/></symbol>
+    <symbol id="i-bold" viewBox="0 0 24 24"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></symbol>
+    <symbol id="i-italic" viewBox="0 0 24 24"><path d="M19 4h-9M14 20H5M15 4 9 20"/></symbol>
+    <symbol id="i-underline" viewBox="0 0 24 24"><path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16"/></symbol>
+    <symbol id="i-strike" viewBox="0 0 24 24"><path d="M16 4H9a3 3 0 0 0-2.83 4M14 12a4 4 0 0 1 0 8H6M4 12h16"/></symbol>
+    <symbol id="i-align" viewBox="0 0 24 24"><path d="M21 6H3M15 12H3M17 18H3"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><path d="M12 12h.01M19 12h.01M5 12h.01"/></symbol>
+    <symbol id="i-more-v" viewBox="0 0 24 24"><path d="M12 12h.01M12 5h.01M12 19h.01"/></symbol>
+  </svg>
+
+  <div class="app" id="app">
+    <div class="backdrop" data-sidebar-toggle></div>
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar" id="sidebar" aria-label="Mailbox navigation">
+      <div class="brand">
+        <svg class="icon icon-lg"><use href="#i-logo" /></svg>
+        <span class="brand__name">Mail Pal</span>
+        <button class="icon-btn" type="button" data-sidebar-toggle aria-label="Toggle sidebar">
+          <svg class="icon"><use href="#i-menu" /></svg>
+        </button>
+      </div>
+
+      <button class="btn-compose" type="button" data-compose-open>Compose</button>
+
+      <nav class="nav" aria-label="Mailboxes">
+        <button class="nav-item is-active" type="button" aria-current="page">
+          <svg class="icon"><use href="#i-inbox" /></svg><span class="nav-item__label">Inbox</span><span class="nav-item__count">735</span>
+        </button>
+        <button class="nav-item" type="button"><svg class="icon"><use href="#i-send" /></svg><span class="nav-item__label">Sent</span></button>
+        <button class="nav-item" type="button"><svg class="icon"><use href="#i-file" /></svg><span class="nav-item__label">Drafts</span><span class="nav-item__count">12</span></button>
+        <button class="nav-item" type="button"><svg class="icon"><use href="#i-star" /></svg><span class="nav-item__label">Favorite</span></button>
+        <button class="nav-item" type="button"><svg class="icon"><use href="#i-spam" /></svg><span class="nav-item__label">Spam</span></button>
+        <button class="nav-item" type="button"><svg class="icon"><use href="#i-trash" /></svg><span class="nav-item__label">Trash</span></button>
+      </nav>
+
+      <section class="sidebar-section" aria-labelledby="folders-title">
+        <h2 class="sidebar-section__title" id="folders-title">Folders
+          <button class="icon-btn" type="button" aria-label="Add folder"><svg class="icon"><use href="#i-plus" /></svg></button>
+        </h2>
+        <nav class="nav" aria-label="Folders">
+          <button class="nav-item" type="button"><svg class="icon"><use href="#i-folder" /></svg><span class="nav-item__label">Study</span></button>
+          <button class="nav-item" type="button"><svg class="icon"><use href="#i-folder" /></svg><span class="nav-item__label">Portfolio</span></button>
+          <button class="nav-item" type="button"><svg class="icon"><use href="#i-folder" /></svg><span class="nav-item__label">Collaboration</span></button>
+        </nav>
+      </section>
+
+      <section class="sidebar-section" aria-labelledby="labels-title">
+        <h2 class="sidebar-section__title" id="labels-title">Labels
+          <button class="icon-btn" type="button" aria-label="Add label"><svg class="icon"><use href="#i-plus" /></svg></button>
+        </h2>
+        <nav class="nav" aria-label="Labels">
+          <button class="nav-item" type="button" data-label="studio"><svg class="icon label-icon"><use href="#i-bookmark" /></svg><span class="nav-item__label">Studio</span></button>
+          <button class="nav-item" type="button" data-label="workshop"><svg class="icon label-icon"><use href="#i-bookmark" /></svg><span class="nav-item__label">Workshop</span></button>
+          <button class="nav-item" type="button" data-label="upwork"><svg class="icon label-icon"><use href="#i-bookmark" /></svg><span class="nav-item__label">Upwork</span></button>
+          <button class="nav-item" type="button" data-label="partnership"><svg class="icon label-icon"><use href="#i-bookmark" /></svg><span class="nav-item__label">Partnership</span></button>
+          <button class="nav-item" type="button" data-label="bank"><svg class="icon label-icon"><use href="#i-bookmark" /></svg><span class="nav-item__label">Bank</span></button>
+        </nav>
+      </section>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="mail">
+
+      <!-- Message list -->
+      <section class="list-pane" aria-label="Message list">
+        <header class="pane-header">
+          <button class="icon-btn menu-btn" type="button" data-sidebar-toggle aria-label="Open sidebar">
+            <svg class="icon"><use href="#i-menu" /></svg>
+          </button>
+          <label class="search">
+            <svg class="icon"><use href="#i-search" /></svg>
+            <input type="search" placeholder="Search..." aria-label="Search messages" />
+          </label>
+        </header>
+
+        <div class="list-head">
+          <div>
+            <h1 class="list-head__title">Inbox</h1>
+            <p class="list-head__meta">735 Messages, 3 Unread</p>
+          </div>
+          <select class="select" aria-label="Filter messages">
+            <option>All messages</option>
+            <option>Unread</option>
+            <option>Starred</option>
+            <option>With attachments</option>
+          </select>
+        </div>
+
+        <!--
+          Cards go inside this list. Markup the CSS expects:
+
+          <li>
+            <article class="mail-card is-unread" data-id="123" tabindex="0">
+              <div class="mail-card__top">
+                <span class="mail-card__sender">Foanse</span>
+                <svg class="icon mail-card__attach"><use href="#i-paperclip" /></svg>  (optional)
+                <time class="mail-card__time">Today, 11:21 AM</time>
+                <button class="star-btn" type="button" aria-label="Star"><svg class="icon"><use href="#i-star" /></svg></button>
+              </div>
+              <h3 class="mail-card__title">Subject</h3>
+              <p class="mail-card__preview">Preview text...</p>
+              <div class="mail-card__tags"><span class="tag" data-label="studio">Studio</span></div>
+            </article>
+          </li>
+
+          Modifiers: .is-unread (bold text), .is-active (selected), .is-on on .star-btn (starred)
+        -->
+        <ul class="mail-list" id="mailList"></ul>
+      </section>
+
+      <!-- Reading pane -->
+      <section class="reading-pane" id="readingPane" aria-label="Message">
+        <header class="pane-header toolbar">
+          <button class="icon-btn back-btn" type="button" data-reading-close aria-label="Back to inbox">
+            <svg class="icon"><use href="#i-chevron-left" /></svg>
+          </button>
+          <div class="toolbar__actions">
+            <button class="toolbar-btn is-filled" type="button"><svg class="icon"><use href="#i-reply" /></svg><span>Reply</span></button>
+            <button class="toolbar-btn" type="button"><svg class="icon"><use href="#i-forward" /></svg><span>Forward</span></button>
+            <button class="toolbar-btn" type="button"><svg class="icon"><use href="#i-spam" /></svg><span>Spam</span></button>
+            <button class="toolbar-btn" type="button"><svg class="icon"><use href="#i-tag" /></svg><span>Label</span></button>
+            <button class="toolbar-btn" type="button"><svg class="icon"><use href="#i-trash" /></svg><span>Delete</span></button>
+            <button class="toolbar-btn" type="button"><svg class="icon"><use href="#i-archive" /></svg><span>Archive</span></button>
+          </div>
+          <button class="profile" type="button" aria-label="Account menu">
+            <span class="avatar">OF</span>
+            <span class="profile__info">
+              <span class="profile__name">Olivia Foster</span>
+              <span class="profile__email">olivia.foster@bravebunny.co</span>
+            </span>
+            <svg class="icon icon-sm"><use href="#i-chevron-down" /></svg>
+          </button>
+        </header>
+
+        <div class="reading-body" id="readingBody">
+          <div class="empty-state">
+            <svg class="icon icon-xl"><use href="#i-mail" /></svg>
+            <p>Select a message to read it</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============ COMPOSE WINDOW ============ -->
+  <section class="compose" id="compose" aria-label="New message" hidden>
+    <header class="compose__header">
+      <button class="compose__from" type="button">New message from: <strong>olivia.foster@bravebunny.co</strong>
+        <svg class="icon icon-sm"><use href="#i-chevron-down" /></svg>
+      </button>
+      <div class="compose__window-actions">
+        <button class="icon-btn" type="button" data-compose-minimize aria-label="Minimize"><svg class="icon"><use href="#i-minus" /></svg></button>
+        <button class="icon-btn" type="button" data-compose-expand aria-label="Expand"><svg class="icon"><use href="#i-expand" /></svg></button>
+        <button class="icon-btn icon-btn--filled" type="button" data-compose-close aria-label="Close"><svg class="icon"><use href="#i-x" /></svg></button>
+      </div>
+    </header>
+
+    <div class="compose__fields">
+      <div class="field">
+        <label class="field__label" for="to">To:</label>
+        <input class="field__input" id="to" type="email" placeholder="Recipient" />
+        <span class="field__cc">CC</span><span class="field__cc">BCC</span>
+      </div>
+      <div class="field">
+        <label class="field__label" for="subject">Subject:</label>
+        <input class="field__input" id="subject" type="text" placeholder="Subject" />
+      </div>
+    </div>
+
+    <div class="compose__body" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Message body" data-placeholder="Write your message..."></div>
+
+    <div class="format-bar" role="toolbar" aria-label="Text formatting">
+      <button class="icon-btn" type="button" aria-label="Bold"><svg class="icon icon-sm"><use href="#i-bold" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="Italic"><svg class="icon icon-sm"><use href="#i-italic" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="Underline"><svg class="icon icon-sm"><use href="#i-underline" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="Strikethrough"><svg class="icon icon-sm"><use href="#i-strike" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="Align"><svg class="icon icon-sm"><use href="#i-align" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="List"><svg class="icon icon-sm"><use href="#i-list" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="Link"><svg class="icon icon-sm"><use href="#i-link" /></svg></button>
+      <button class="icon-btn" type="button" aria-label="More formatting"><svg class="icon icon-sm"><use href="#i-more" /></svg></button>
+    </div>
+
+    <footer class="compose__footer">
+      <div class="send-group">
+        <button class="btn-send" type="button">Send</button>
+        <button class="btn-send btn-send--icon" type="button" aria-label="Schedule send"><svg class="icon icon-sm"><use href="#i-calendar" /></svg></button>
+      </div>
+      <div class="compose__tools">
+        <button class="icon-btn" type="button" aria-label="Attach file"><svg class="icon"><use href="#i-paperclip" /></svg></button>
+        <button class="icon-btn" type="button" aria-label="Emoji"><svg class="icon"><use href="#i-smile" /></svg></button>
+        <button class="icon-btn" type="button" aria-label="Insert image"><svg class="icon"><use href="#i-image" /></svg></button>
+        <button class="icon-btn" type="button" aria-label="Templates"><svg class="icon"><use href="#i-file-text" /></svg></button>
+        <button class="icon-btn" type="button" aria-label="Signature"><svg class="icon"><use href="#i-pen" /></svg></button>
+        <button class="icon-btn" type="button" aria-label="Confidential mode"><svg class="icon"><use href="#i-lock" /></svg></button>
+        <button class="icon-btn" type="button" aria-label="More options"><svg class="icon"><use href="#i-more-v" /></svg></button>
+      </div>
+      <button class="icon-btn" type="button" data-compose-close aria-label="Discard draft"><svg class="icon"><use href="#i-trash" /></svg></button>
+    </footer>
+  </section>
+
+</body>
+</html>
