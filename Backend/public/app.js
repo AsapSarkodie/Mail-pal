@@ -160,8 +160,10 @@ form.addEventListener("submit", async (e) => {
 
   let response = await sendMessage.json();
   console.log(response);
-  console.log(sendTo.value);
-  
+  if (response.message == 'MESSAGE_SENT_SUCESSFULLY') {
+    alert(`message sent..`)
+    form.reset();
+  }
   
   } catch (error) {
     console.log(error);

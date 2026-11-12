@@ -40,7 +40,7 @@ const sendMessage = async (req, res) => {
     
 
     //save to database
-    const save = await saveMessage(sentBy, sendTo, subject, body, file);
+    const save = await saveMessage(sentBy, sendTo, subject, body, file.path);
 
     console.log(save);
     if (save) {
