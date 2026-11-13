@@ -191,3 +191,26 @@ It knows nothing about req or res. It just takes plain data, does the work, and 
        
 
      </script>
+
+
+     HOW THE CARD SHOULD LOOK
+
+       <!--
+          Cards go inside this list. Markup the CSS expects:
+
+          <li>
+            <article class="mail-card is-unread" data-id="123" tabindex="0">
+              <div class="mail-card__top">
+                <span class="mail-card__sender">Foanse</span>
+                <svg class="icon mail-card__attach"><use href="#i-paperclip" /></svg>  (optional)
+                <time class="mail-card__time">Today, 11:21 AM</time>
+                <button class="star-btn" type="button" aria-label="Star"><svg class="icon"><use href="#i-star" /></svg></button>
+              </div>
+              <h3 class="mail-card__title">Subject</h3>
+              <p class="mail-card__preview">Preview text...</p>
+              <div class="mail-card__tags"><span class="tag" data-label="studio">Studio</span></div>
+            </article>
+          </li>
+
+          Modifiers: .is-unread (bold text), .is-active (selected), .is-on on .star-btn (starred)
+        -->

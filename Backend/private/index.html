@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css" />
+  <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
   <script src="/app.js" defer></script>
 </head>
 <body>
@@ -70,14 +71,14 @@
       <button class="btn-compose" type="button" data-compose-open>Compose</button>
 
       <nav class="nav" aria-label="Mailboxes">
-        <button class="nav-item is-active" type="button" aria-current="page">
-          <svg class="icon"><use href="#i-inbox" /></svg><span class="nav-item__label">Inbox</span><span class="nav-item__count">735</span>
+        <button data-folder="inbox" class="nav-item is-active" type="button" aria-current="page">
+          <svg class="icon"><use href="#i-inbox" /></svg><span class="nav-item__label">Inbox</span><span class="nav-item__count"></span>
         </button>
-        <button class="nav-item" type="button"><svg class="icon"><use href="#i-send" /></svg><span class="nav-item__label">Sent</span></button>
-        <button class="nav-item" type="button"><svg class="icon"><use href="#i-file" /></svg><span class="nav-item__label">Drafts</span><span class="nav-item__count">12</span></button>
-        <button class="nav-item" type="button"><svg class="icon"><use href="#i-star" /></svg><span class="nav-item__label">Favorite</span></button>
-        <button class="nav-item" type="button"><svg class="icon"><use href="#i-spam" /></svg><span class="nav-item__label">Spam</span></button>
-        <button class="nav-item" type="button"><svg class="icon"><use href="#i-trash" /></svg><span class="nav-item__label">Trash</span></button>
+        <button data-folder="sent" class="nav-item" type="button"><svg class="icon"><use href="#i-send" /></svg><span class="nav-item__label">Sent</span></button>
+        <button data-folder="drafts" class="nav-item" type="button"><svg class="icon"><use href="#i-file" /></svg><span class="nav-item__label">Drafts</span><span class="nav-item__count">12</span></button>
+        <button data-folder="favorite" class="nav-item" type="button"><svg class="icon"><use href="#i-star" /></svg><span class="nav-item__label">Favorite</span></button>
+        <button data-folder="spam" class="nav-item" type="button"><svg class="icon"><use href="#i-spam" /></svg><span class="nav-item__label">Spam</span></button>
+        <button data-folder="trash" class="nav-item" type="button"><svg class="icon"><use href="#i-trash" /></svg><span class="nav-item__label">Trash</span></button>
       </nav>
 
       <section class="sidebar-section" aria-labelledby="folders-title">
@@ -123,7 +124,7 @@
         <div class="list-head">
           <div>
             <h1 class="list-head__title">Inbox</h1>
-            <p class="list-head__meta">735 Messages, 3 Unread</p>
+            <p class="list-head__meta"></p>
           </div>
           <select class="select" aria-label="Filter messages">
             <option>All messages</option>
@@ -132,9 +133,6 @@
             <option>With attachments</option>
           </select>
         </div>
-
-        <!--
-          Cards go inside this list. Markup the CSS expects:
 
           <li>
             <article class="mail-card is-unread" data-id="123" tabindex="0">
@@ -150,8 +148,6 @@
             </article>
           </li>
 
-          Modifiers: .is-unread (bold text), .is-active (selected), .is-on on .star-btn (starred)
-        -->
         <ul class="mail-list" id="mailList"></ul>
       </section>
 

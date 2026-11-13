@@ -6,6 +6,7 @@ const sendMessage = async (req, res) => {
     const {sendTo, subject, body} = req.body;
     const sentBy = req.user.email;
     const file = req.file;
+    const filePath = file?.path ?? null;
 
     try {
      
@@ -40,7 +41,7 @@ const sendMessage = async (req, res) => {
     
 
     //save to database
-    const save = await saveMessage(sentBy, sendTo, subject, body, file.path);
+    const save = await saveMessage(sentBy, sendTo, subject, body, filePath);
 
     console.log(save);
     if (save) {
@@ -84,7 +85,7 @@ const readSentMessages = async (req, res) => {
         }
        
         //read sent 
-        const sent = await readSent(user.id);
+        const sent = await readSent(user.email);
         
         //return messages
       return  res.json({message: sent});
