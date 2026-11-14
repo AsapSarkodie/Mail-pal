@@ -20,7 +20,7 @@ const saveMessage = async (sentBy, sentTo, subject, body, filePath) => {
 const readInbox = async (sentTo) =>{
     try {
         const inbox = await pool.query(`
-            SELECT subject, body, starred, is_read, created_at, sent_by, sent_to FROM messages 
+            SELECT  id, subject, body, starred, is_read, created_at, sent_by, sent_to, file_path FROM messages 
             WHERE sent_to = $1`, [sentTo]);
 
     //check if message is empty
@@ -41,7 +41,7 @@ const readInbox = async (sentTo) =>{
 const readSent = async (sentBy) => {
     try {
         const sent = await pool.query(`
-            SELECT subject, body, starred, is_read FROM messages 
+            SELECT id, subject, body, starred, is_read, sent_by, created_at FROM messages 
             WHERE sent_by = $1`, [sentBy]);
 
         if (sent.rows.length === 0) {

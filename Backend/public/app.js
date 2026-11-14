@@ -176,13 +176,19 @@ form.addEventListener("submit", async (e) => {
   };
 });
 
-//fetch inbox
 
-const readInbox = async () => {
+const listHeadMeta = document.querySelector(".list-head__meta");
+const sentButton = document.querySelector('[data-folder="sent"]');
+const inboxButton = document.querySelector('[data-folder="inbox"]');
+const listHead = document.querySelector(".list-head__title");
+const count = document.querySelector('.nav-item__count');
+
+//fetch inbox
+  const readInbox = async () => {
   const mailList = document.querySelector("#mailList");
   mailList.classList.add("mail-list");
   //number of mails
-  const listHeadMeta = document.querySelector(".list-head__meta")
+
   const count = document.querySelector('.nav-item__count')
 
   try {
@@ -217,12 +223,25 @@ const readInbox = async () => {
     body.classList.add("mail-card__preview");
     starSvg.classList.add("icon");
     starUse.setAttribute("href", "#i-star");
+    //check if the data contains a file.
+    //declaring the icon outside so that i can access it outside the if block
+    let icon = null;
+    if (msg.file_path) {
+      icon = document.createElementNS( "http://www.w3.org/2000/svg",  "svg");
+      icon.classList.add("icon", "mail-card__attach");
+      const use = document.createElementNS( "http://www.w3.org/2000/svg","use" );
+      use.setAttribute("href", "#i-paperclip");
+      icon.appendChild(use);
+      mailCardTop.append(icon);
+    } else {
+      icon = ''
+    }
     //append them
     starSvg.append(starUse);
     star.append(starSvg);
     main.append(article);
     article.append(mailCardTop, subject, body);
-    mailCardTop.append(mailCardSender, date, star);
+    mailCardTop.append(mailCardSender, icon, date, star);
     mailList.append(main);
     //add text contents
     let formatSender = `${msg.sent_by[0].toUpperCase()}${msg.sent_by.slice(1, msg.sent_by.indexOf('@'))}`;
@@ -251,19 +270,89 @@ const readInbox = async () => {
 };
 
 //add the star logo in js ✅
-//fetch sent data
+//fetch sent data ✅
+//add attachment pin if the message has a file✅
+//preview
 
-const sentButton = document.querySelector('[data-folder="sent"]');
-const inboxButton = document.querySelector('[data-folder="inbox"]');
-const listHead = document.querySelector(".list-head__title");
+
 
 //fetch sent messages
 const readSent = async () => {
+ 
   try {
+    mailList.innerHTML = ''
     listHead.textContent = 'Sent';
     const getsentMessages = await fetch("http://localhost:8080/mail/readSent");
     const data = await getsentMessages.json();
-    console.log(data);
+    const sent = data.message;
+    console.log(sent);
+    listHeadMeta.textContent = `${sent.length} Messages unread`; 
+    //create all the elements;
+    sent.forEach((msg)=>{
+    //create elements
+    let main = document.createElement("li")
+    let article = document.createElement("article");
+    let mailCardTop = document.createElement("div");
+    let mailCardSender = document.createElement("span");
+    let attachment = document.createElement("svg");
+    let date = document.createElement("time");
+    let star = document.createElement("button");
+    let starSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    let starUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    let subject = document.createElement("h3");
+    let body = document.createElement("p");
+     //check if the data contains a file.
+    //declaring the icon outside so that i can access it outside the if block
+    let icon = null;
+    if (msg.file_path) {
+      icon = document.createElementNS( "http://www.w3.org/2000/svg",  "svg");
+      icon.classList.add("icon", "mail-card__attach");
+      const use = document.createElementNS( "http://www.w3.org/2000/svg","use" );
+      use.setAttribute("href", "#i-paperclip");
+      icon.appendChild(use);
+      mailCardTop.append(icon);
+    } else {
+      icon = ''
+    }
+    //add their classes
+    article.classList.add("mail-card");
+    mailCardTop.classList.add("mail-card__top");
+    mailCardSender.classList.add("mail-card__sender");
+    attachment.classList.add("mail-card__attach");
+    date.classList.add("mail-card__time");
+    star.classList.add("star-btn");
+    subject.classList.add("mail-card__title");
+    body.classList.add("mail-card__preview");
+    starSvg.classList.add("icon");
+    starUse.setAttribute("href", "#i-star");
+    //append them
+    starSvg.append(starUse);
+    star.append(starSvg);
+    main.append(article);
+    article.append(mailCardTop, subject, body);
+    mailCardTop.append(mailCardSender, icon, date, star);
+    mailList.append(main);
+    //add text contents
+    let formatSender = `${msg.sent_by[0].toUpperCase()}${msg.sent_by.slice(1, msg.sent_by.indexOf('@'))}`;
+    let timestamp = msg.created_at;
+    const wholeDate = new Date(timestamp);
+    //time formate
+    const day = new Intl.DateTimeFormat("en-US", {
+    weekday: "long"
+    }).format(wholeDate);
+
+   const time = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+   }).format(wholeDate);
+    mailCardSender.textContent = formatSender;
+    //add text content
+    attachment.href = '#i-star'
+    date.textContent = `${day} ${time}`;
+    subject.textContent = msg.subject;
+    body.textContent = msg.body.length > 49 ? `${msg.body.slice(0, 48)}...`  : msg.body;
+    });
   } catch (error) {
     console.log(error);
   }
@@ -272,10 +361,81 @@ const readSent = async () => {
 //fetch inbox
 const readInboxByClick = async () => {
   try {
+    mailList.innerHTML = '';
     listHead.textContent = 'Inbox';
     const getsentMessages = await fetch("http://localhost:8080/mail/readMessages");
     const data = await getsentMessages.json();
-    console.log(data);
+    console.log(data.message);
+    const inbox = data.message;
+    listHeadMeta.textContent = `${inbox.length} Messages unread`; 
+    count.textContent = inbox.length;
+    //create all the elements;
+    inbox.forEach((msg)=>{
+    //create elements
+    let main = document.createElement("li")
+    let article = document.createElement("article");
+    let mailCardTop = document.createElement("div");
+    let mailCardSender = document.createElement("span");
+    let attachment = document.createElement("svg");
+    let date = document.createElement("time");
+    let star = document.createElement("button");
+    let starSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    let starUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    let subject = document.createElement("h3");
+    let body = document.createElement("p");
+     //check if the data contains a file.
+    //declaring the icon outside so that i can access it outside the if block
+    let icon = null;
+    if (msg.file_path) {
+      icon = document.createElementNS( "http://www.w3.org/2000/svg",  "svg");
+      icon.classList.add("icon", "mail-card__attach");
+      const use = document.createElementNS( "http://www.w3.org/2000/svg","use" );
+      use.setAttribute("href", "#i-paperclip");
+      icon.appendChild(use);
+      mailCardTop.append(icon);
+    } else {
+      icon = ''
+    }
+    //add their classes
+    article.classList.add("mail-card");
+    mailCardTop.classList.add("mail-card__top");
+    mailCardSender.classList.add("mail-card__sender");
+    attachment.classList.add("mail-card__attach");
+    date.classList.add("mail-card__time");
+    star.classList.add("star-btn");
+    subject.classList.add("mail-card__title");
+    body.classList.add("mail-card__preview");
+    starSvg.classList.add("icon");
+    starUse.setAttribute("href", "#i-star");
+    //append them
+    starSvg.append(starUse);
+    star.append(starSvg);
+    main.append(article);
+    article.append(mailCardTop, subject, body);
+    mailCardTop.append(mailCardSender, icon, date, star);
+    mailList.append(main);
+    //add text contents
+    let formatSender = `${msg.sent_by[0].toUpperCase()}${msg.sent_by.slice(1, msg.sent_by.indexOf('@'))}`;
+    let timestamp = msg.created_at;
+    const wholeDate = new Date(timestamp);
+    //time formate
+    const day = new Intl.DateTimeFormat("en-US", {
+    weekday: "long"
+    }).format(wholeDate);
+
+   const time = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+   }).format(wholeDate);
+    mailCardSender.textContent = formatSender;
+    //add text content
+    attachment.href = '#i-star'
+    date.textContent = `${day} ${time}`;
+    subject.textContent = msg.subject;
+    body.textContent = msg.body.length > 49 ? `${msg.body.slice(0, 48)}...`  : msg.body;
+    });
+
   } catch (error) {
     console.log(error);
   }
