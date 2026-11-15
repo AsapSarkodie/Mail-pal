@@ -47,17 +47,11 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeDrawer();
 });
 
-/* ----------------------------------------------------------
-   Message list
-   Uses event delegation: one listener on the list handles every
-   card, including cards added later after you fetch your data.
-   ---------------------------------------------------------- */
+
 const selectCard = (card) => {
   mailList.querySelectorAll(".mail-card.is-active").forEach((el) => el.classList.remove("is-active"));
   card.classList.add("is-active");
   card.classList.remove("is-unread");
-
-  // TODO: fetch the full message with card.dataset.id and render it into #readingBody
   app.classList.add("is-reading-open"); // opens the full-screen reading pane on mobile
 };
 

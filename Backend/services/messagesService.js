@@ -41,7 +41,7 @@ const readInbox = async (sentTo) =>{
 const readSent = async (sentBy) => {
     try {
         const sent = await pool.query(`
-            SELECT id, subject, body, starred, is_read, sent_by, created_at FROM messages 
+            SELECT id, subject, body, starred, is_read, sent_by, file_path, created_at FROM messages 
             WHERE sent_by = $1`, [sentBy]);
 
         if (sent.rows.length === 0) {
@@ -55,4 +55,30 @@ const readSent = async (sentBy) => {
     }
 };
 
-export {saveMessage, readInbox, readSent};
+const saveReply = async (message_id, sent_by, sent_to, body, file_path) => {
+    try {
+        const reply = await pool.query(`
+            INSERT INTO replies (message_id, sent_by, sent_to, body, file_path) VALUES ($1, $2, $3, $4, $5)  RETURNING message_id, sent_by, sent_to, body, file_path`, 
+            [message_id, sent_by, sent_to, body, file_path]);
+ 
+
+     return reply.rows[0]
+
+    } catch (error) {
+        console.log(error);
+        throw error
+    }
+};
+
+const getRepliesByMessageId = async (messageId) => {
+  const { rows } = await pool.query(
+    `SELECT id, sent_by, sent_to, body, file_path, created_at
+     FROM replies
+     WHERE message_id = $1
+     ORDER BY created_at ASC`,
+    [messageId]
+  );
+  return rows;
+};
+
+export {saveMessage, readInbox, readSent, saveReply, getRepliesByMessageId};

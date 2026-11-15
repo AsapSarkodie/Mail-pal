@@ -1,4 +1,4 @@
-import { saveMessage, readInbox, readSent } from "../services/messagesService.js";
+import { saveMessage, readInbox, readSent, saveReply } from "../services/messagesService.js";
 
 const sendMessage = async (req, res) => {
     
@@ -82,7 +82,7 @@ const readSentMessages = async (req, res) => {
         if (!user) {
             console.log('not looged in');
         return res.status(401).json({message: `NOT_AUTHORIZED`})
-        }
+        };
        
         //read sent 
         const sent = await readSent(user.email);
@@ -97,4 +97,43 @@ const readSentMessages = async (req, res) => {
     }
 };
 
-export {sendMessage, readInboxMessage, readSentMessages};
+//save a reply
+const saveAReply = async (req, res) => {
+
+    //check if user is allowed to send a message
+    const user = req.user;
+     if (!user) {
+        console.log('not looged in');
+        return res.status(401).json({message: `NOT_AUTHORIZED`})
+        };
+
+    const {message_id, sent_to, body} = req.body;
+    const file = req.file;
+    const filePath = file?.path ?? null;
+
+    if (user.email === sent_to) {
+        return res.json("CAN'T_SEND_MESSAGE_TO_SELF")
+    };
+  try {
+    
+    const save = await saveReply(message_id, user.email, sent_to, body, filePath);
+
+    if (save) {
+        console.log('reply recieved');
+        
+    return res.json({message: `REPLY_SENT_SUCCESSFULLY`})
+    };
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "SERVER_ERROR" })
+    
+  }
+};
+
+const loadReplies = async (req, res) => {
+    const {message_id} = req.params
+}
+
+
+export {sendMessage, readInboxMessage, readSentMessages, saveAReply};

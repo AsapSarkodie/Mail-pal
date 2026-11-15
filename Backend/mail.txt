@@ -214,3 +214,15 @@ It knows nothing about req or res. It just takes plain data, does the work, and 
 
           Modifiers: .is-unread (bold text), .is-active (selected), .is-on on .star-btn (starred)
         -->
+
+        CREATE TABLE replies (
+  id          SERIAL PRIMARY KEY,
+  message_id  INTEGER      NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
+  sent_by     VARCHAR(255) NOT NULL,   -- email of the person replying
+  sent_to     VARCHAR(255) NOT NULL,   -- email of the person receiving the reply
+  body        TEXT         NOT NULL,
+  file_path   TEXT,                    -- NULL when there is no file
+  created_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_replies_message ON replies (message_id, created_at);
