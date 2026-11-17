@@ -61,7 +61,6 @@ const saveReply = async (message_id, sent_by, sent_to, body, file_path) => {
             INSERT INTO replies (message_id, sent_by, sent_to, body, file_path) VALUES ($1, $2, $3, $4, $5)  RETURNING message_id, sent_by, sent_to, body, file_path`, 
             [message_id, sent_by, sent_to, body, file_path]);
  
-
      return reply.rows[0]
 
     } catch (error) {

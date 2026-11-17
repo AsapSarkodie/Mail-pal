@@ -1,4 +1,4 @@
-import { saveMessage, readInbox, readSent, saveReply } from "../services/messagesService.js";
+import { saveMessage, readInbox, readSent, saveReply, getRepliesByMessageId } from "../services/messagesService.js";
 
 const sendMessage = async (req, res) => {
     
@@ -132,8 +132,22 @@ const saveAReply = async (req, res) => {
 };
 
 const loadReplies = async (req, res) => {
-    const {message_id} = req.params
-}
+    const message_id = req.params.id;
+    try {
+
+        const readReplies = await getRepliesByMessageId(message_id);
+
+       
+            return res.json({message: readReplies})
+ 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: `SERVER_PROBLEM`});
+    };
+
+    
+};
 
 
-export {sendMessage, readInboxMessage, readSentMessages, saveAReply};
+
+export {sendMessage, readInboxMessage, readSentMessages, saveAReply, loadReplies};

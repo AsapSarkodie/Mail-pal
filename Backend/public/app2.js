@@ -471,7 +471,7 @@ compose.addEventListener("reset", clearAttachmentPreview);
    The Reply button opens a form at the bottom of the preview pane.
    It is sent as multipart/form-data, so a file can go with the text.
    ========================================================== */
-const REPLY_URL = "/mail/reply"; // change this to your reply route
+const REPLY_URL = "/mail/sendReply"; // change this to your reply route
 
 const replyForm = document.querySelector("#reply");
 const replyTo = replyForm.querySelector(".reply__to strong");
@@ -482,7 +482,7 @@ const replyFileSize = replyForm.querySelector(".reply__file-size");
 const replySendButton = replyForm.querySelector("button[type='submit']");
 
 // Who gets the reply?
-// A message someone sent to us -> its sender.
+// A message someone sent to us -> its sender. 
 // A message we sent ourselves  -> the person we sent it to.
 const getReplyRecipient = (msg) =>
   msg.sent_by === currentUserEmail && msg.sent_to ? msg.sent_to : msg.sent_by;
@@ -620,4 +620,4 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-//continue from reading replies.
+//continue from reading replies.  
