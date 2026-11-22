@@ -40,7 +40,7 @@ app.use(cookieParser())
 
 
 //serve folders to be accessed later
-app.use(express.static('profiles'));
+app.use("/profiles",express.static('profiles'));
 app.use(express.static('public'));
 //routes
 app.use('/auth', authentication);

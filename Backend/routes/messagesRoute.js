@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { verifyCookie, accessIdFromCookie } from "../middleware/jwt.js ";
-import { sendMessage, readInboxMessage, readSentMessages, saveAReply, loadReplies } from "../controller/messagesController.js";
+import { sendMessage, readInboxMessage, readSentMessages, saveAReply, loadReplies, deleteMessage } from "../controller/messagesController.js";
 import  upload from '../middleware/files.js'
 import path from "path"
 
@@ -27,6 +27,9 @@ messagesRoute.get("/readSent", accessIdFromCookie, readSentMessages);
 messagesRoute.post('/sendReply', accessIdFromCookie, upload.single('attachments'), saveAReply);
 
 //read a reply
-messagesRoute.get("/readReplies/:id",  loadReplies)
+messagesRoute.get("/readReplies/:id",  loadReplies); 
+
+//delete a message
+messagesRoute.delete("/deleteMessage/:id", deleteMessage);
 
 export {messagesRoute}

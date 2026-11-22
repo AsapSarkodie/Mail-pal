@@ -226,3 +226,11 @@ It knows nothing about req or res. It just takes plain data, does the work, and 
 );
 
 CREATE INDEX idx_replies_message ON replies (message_id, created_at);
+
+
+
+CREATE TABLE IF NOT EXISTS hidden_messages (
+  message_id BIGINT       NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
+  user_email VARCHAR(255) NOT NULL,
+  PRIMARY KEY (message_id, user_email)
+);

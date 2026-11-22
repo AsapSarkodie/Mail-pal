@@ -32,4 +32,19 @@ async function findUser(email) {
 
 };
 
-export {saveUser, findUser}
+const loadProfile = async (email) => {
+    try {
+
+    const getProfile = await pool.query( `
+        SELECT profile_picture FROM users WHERE email = $1`, [email] );
+
+    return getProfile.rows[0];
+    
+        
+    } catch (error) {
+        console.log(`error: ${error}`);
+        throw error
+    }
+};
+
+export {saveUser, findUser, loadProfile}

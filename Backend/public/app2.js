@@ -220,12 +220,21 @@ const loadReplies = async (message) => {
 };
 
 // Fill the template with one message and show it in the preview pane
-const renderMessage = (msg) => {
+
+let previewProfile;
+
+
+const renderMessage = async (msg) => {
   const view = document.importNode(messageTemplate.content, true); // a fresh copy of the template
   const name = getSenderName(msg.sent_by);
-  currentMessage = msg;
+  currentMessage = msg; 
 
-  view.querySelector(".message__avatar").textContent = name.slice(0, 2).toUpperCase();
+  const dp = await fetch(`http://localhost:8080/auth/profile-picture/${msg.sent_by}`);
+  const pp = await dp.json();
+  let pic = pp.message;
+  let mainImage = pic.profile_picture;
+ 
+  view.querySelector(".message__avatar").src = `http://localhost:8080/profiles/${mainImage}`
   view.querySelector(".message__sender").textContent = name;
   view.querySelector(".message__email").textContent = msg.sent_by;
   view.querySelector(".message__date").textContent = formatFullDate(msg.created_at);
@@ -356,6 +365,8 @@ const loadFolder = async ({ url, title, updateCount = false }) => {
     const response = await fetch(`${API_URL}${url}`);
     const data = await response.json();
     const list = data.message;
+    console.log(list);
+    
 
     // start fresh: empty list, empty Map, empty preview
     mailList.innerHTML = "";
@@ -551,7 +562,7 @@ replyForm.addEventListener("submit", async (event) => {
   try {
     const response = await fetch(`${API_URL}${REPLY_URL}`, { method: "POST", body: replyData });
     const result = await response.json();
-    console.log(result);
+    console.log(result); 
 
     if (result.message === "REPLY_SENT_SUCCESSFULLY") {
       alert("reply sent..");
@@ -603,16 +614,21 @@ compose.addEventListener("submit", async (event) => {
 /* ==========================================================
    10. START: LOAD THE USER, THEN THE INBOX
    ========================================================== */
+
 window.addEventListener("DOMContentLoaded", async () => {
   try {
     const response = await fetch(`${API_URL}/auth/user-info`);
     const userInfo = await response.json();
-
+    const dp = await fetch(`http://localhost:8080/auth/profile-picture/${userInfo.userEmail}`);
+    const pp = await dp.json();
+    let pic = pp.message;
+    let mainImage = pic.profile_picture;
+    
     currentUserEmail = userInfo.userEmail;
     composeBoxUserName.textContent = userInfo.userEmail;
     profileEmail.textContent = userInfo.userEmail;
     profileName.textContent = userInfo.username;
-    avatar.textContent = `${userInfo.username[0]}${userInfo.username.at(-1)}`; // first + last letter
+    avatar.src = `http://localhost:8080/profiles/${mainImage}`;
 
     readInbox();
   } catch (error) {
@@ -620,4 +636,4 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-//continue from reading replies.  
+//Delete a message.

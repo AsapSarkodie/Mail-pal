@@ -1,4 +1,4 @@
-import { saveMessage, readInbox, readSent, saveReply, getRepliesByMessageId } from "../services/messagesService.js";
+import { saveMessage, readInbox, readSent, saveReply, getRepliesByMessageId, deleteMessageById} from "../services/messagesService.js";
 
 const sendMessage = async (req, res) => {
     
@@ -136,18 +136,34 @@ const loadReplies = async (req, res) => {
     try {
 
         const readReplies = await getRepliesByMessageId(message_id);
-
-       
+      
             return res.json({message: readReplies})
  
     } catch (error) {
         console.log(error);
         res.status(500).json({message: `SERVER_PROBLEM`});
     };
+ 
+};
 
-    
+const deleteMessage = async (req, res) => {
+    const messageId = req.params.id;
+    if (!messageId) {
+     console.log(`no message selected`);
+     return res.status(404).json({message: `NO_MESSAGE_SELECTED`})
+    };
+    try {
+     const deleteMsg = await deleteMessageById(messageId);
+     console.log(`message with id ${messageId} has been deleted`);
+     
+     return res.json({message: deleteMsg});
+        
+    } catch (error) {
+        console.log(error);
+        res.json({message: `SOMETHING_WENT-WRONG`})
+    };
 };
 
 
 
-export {sendMessage, readInboxMessage, readSentMessages, saveAReply, loadReplies};
+export {sendMessage, readInboxMessage, readSentMessages, saveAReply, loadReplies, deleteMessage};

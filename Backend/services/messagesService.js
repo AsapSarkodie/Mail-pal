@@ -21,7 +21,7 @@ const readInbox = async (sentTo) =>{
     try {
         const inbox = await pool.query(`
             SELECT  id, subject, body, starred, is_read, created_at, sent_by, sent_to, file_path FROM messages 
-            WHERE sent_to = $1`, [sentTo]);
+            WHERE sent_to = $1 ORDER BY created_at DESC`, [sentTo]);
 
     //check if message is empty
     if (inbox.rows.length === 0) {
@@ -80,4 +80,12 @@ const getRepliesByMessageId = async (messageId) => {
   return rows;
 };
 
-export {saveMessage, readInbox, readSent, saveReply, getRepliesByMessageId};
+const deleteMessageById = async (messageId) => {
+    const {rows} = await pool.query(`
+     DELETE FROM messages WHERE id = $1
+    `, [messageId]);
+    
+    return rows;
+};
+
+export {saveMessage, readInbox,readSent,saveReply,getRepliesByMessageId,deleteMessageById};

@@ -1,5 +1,5 @@
 
-import { saveUser, findUser } from "../services/authService.js";
+import { saveUser, findUser, loadProfile } from "../services/authService.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import path from 'path';
@@ -21,7 +21,7 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 9);
 
     //save user into database
-    const inputUser = await saveUser(username, email, hashedPassword, profilePicture?.path ?? null);
+    const inputUser = await saveUser(username, email, hashedPassword, profilePicture?.filename ?? null);
     
     //check if storage was successful
     if (inputUser) {
@@ -110,5 +110,20 @@ const loadUserInfo = async (req, res) =>{
         console.log(error);
     }
 };
-//can next be placed under the return keyword
-export {registerUser, signInUser, getLoginPage, getSignUpPage, loadUserInfo}
+
+const loadProfilePicture = async (req, res) =>{
+    const email = req.params.email;
+    
+    try {
+      const result = await loadProfile(email);
+       
+      res.json({message: result}); 
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: error})
+    }
+}
+export {registerUser, signInUser, getLoginPage, getSignUpPage, loadUserInfo, loadProfilePicture}
+
+//software to fill questionaire 
